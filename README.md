@@ -4,13 +4,13 @@ Voice of Bangladesh is an innovative digital governance initiative designed to b
 The system supports bilingual interaction (Bangla and English), mobile responsiveness, and advanced analytics to derive policy insights. By empowering both citizens and government officers with a unified digital interface, Voice of Bangladesh aims to enhance accountability, responsiveness, and citizen satisfaction while supporting the broader vision of a Smart and Digital Bangladesh.
 
 Task Distribution:
-| Name                       | ID               | Task                 |
-|----------------------------|------------------|----------------------|
-| Md Shahriar Mannan Prottoy | 0242220005101490 | Submit Feedback      |
-| Mahtab Chowdhury           | 0242220005101076 | Tracking System      |
-| Shahriar Sakhawat Tahin    | 0242220005101383 | Officer portal       |
-| Md Shehabub Mobin Siam     | 0242220005101043 | DashBoard            |
-| Abdulla Al Moin            | 0242220005101382 | Login & Registration |
+| Name                       | ID               | Task    |
+|----------------------------|------------------|---------|
+| Md Shahriar Mannan Prottoy | 0242220005101490 | Fr1,FR6 |
+| Mahtab Chowdhury           | 0242220005101076 | FR2,FR6 |
+| Shahriar Sakhawat Tahin    | 0242220005101383 | FR3,FR6 |
+| Md Shehabub Mobin Siam     | 0242220005101043 | FR4,FR4 |
+| Abdulla Al Moin            | 0242220005101382 | FR%,FR6 |
 
 
 
@@ -41,4 +41,5 @@ Prottoy: Submit Feedback
 Mahtab:tracking system
 Siam: login portal
 Moin: Main Dashboard
+
 
