@@ -26,9 +26,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
     
-    <link rel="stylesheet" href="modern-styles.css">
-    <link rel="stylesheet" href="dashboard-styles.css">
-    <link rel="stylesheet" href="executive-styles.css">
+    <link rel="stylesheet" href="{{ asset('css/modern-styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard-styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/executive-styles.css') }}">
 </head>
 
 <body class="dashboard-body">
@@ -1028,8 +1028,8 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="modern-app.js"></script>
-    <script src="dashboard-app.js"></script>
-    <script src="executive-app.js"></script>
+    <script src="{{ asset('js/modern-app.js') }}"></script>
+    <script src="{{ asset('js/dashboard-app.js') }}"></script>
+    <script src="{{ asset('js/executive-app.js') }}"></script>
 </body>
 </html>
