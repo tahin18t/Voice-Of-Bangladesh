@@ -66,7 +66,7 @@
                 </div>
                 <div class="officer-info">
                     <div class="officer-avatar">
-                        <img src="./image/hero2.JPG" alt="Tahin" class="avatar-img">
+                        <img src="{{ asset('image/tahin.jpg') }}" alt="Tahin" class="avatar-img">
                         <div class="status-indicator online"></div>
                     </div>
                     <div class="officer-details">
