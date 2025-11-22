@@ -86,7 +86,7 @@
                 </div>
 
                 <button type="button" class="login-btn" data-en="Sign In" data-bn="সাইন ইন"
-                    onclick="window.location.href='officer-dashboard.html'">
+                    onclick="window.location.href='officer-dashboard.blade.php'">
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Sign In</span>
                     <div class="btn-loader" id="login-loader" style="display: none;">
