@@ -22,9 +22,9 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
-    
-    <link rel="stylesheet" href="submit-feedback.css">
-    <link rel="stylesheet" href="feedback-styles.css">
+
+    <link rel="stylesheet" href="{{ asset('css/submit-feedback.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/feedback-styles.css') }}">
 </head>
 
 <body class="loading">
@@ -565,7 +565,8 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="submit-feedback.js"></script>
-    <script src="feedback-app.js"></script>
+    <script src="{{ asset('js/submit-feedback.js') }}"></script>
+    <script src="{{ asset('js/feedback-app.js') }}"></script>
+
 </body>
 </html>
