@@ -5,7 +5,7 @@
 /* CSS Custom Properties for Dashboard */
 :root {
     /* Dashboard specific colors */
-    --dashboard-sidebar-bg: linear-gradient(180deg, #1a365d 0%, #2d3748 100%);
+    --dashboard-sidebar-bg: linear-gradient(180deg, #006747 0%, #004A32 100%);
     --dashboard-main-bg: #f8fafc;
     --sidebar-width: 280px;
     --sidebar-collapsed-width: 70px;
@@ -216,7 +216,7 @@
 /* Sidebar - CFPIP Theme */
 .sidebar {
     width: 280px;
-    background: linear-gradient(180deg, #006747 0%, #004a32 100%);
+    background: var(--dashboard-sidebar-bg);
     color: white;
     display: flex;
     flex-direction: column;
@@ -1344,7 +1344,7 @@
 /* Sidebar Styles */
 .sidebar {
     width: 280px;
-    background: linear-gradient(180deg, #1a365d 0%, #2d3748 100%);
+    background: var(--dashboard-sidebar-bg);
     color: white;
     display: flex;
     flex-direction: column;

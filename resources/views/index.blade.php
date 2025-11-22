@@ -70,11 +70,11 @@
                     <i class="fas fa-home"></i>
                     <span data-en="Home" data-bn="হোম">Home</span>
                 </a>
-                <a href="submit-feedback.html" class="nav-link">
+                <a href="{{ url('/submit-feedback') }}" class="nav-link">
                     <i class="fas fa-comment-dots"></i>
                     <span data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</span>
                 </a>
-                <a href="track.html" class="nav-link">
+                <a href="{{ url('/track') }}" class="nav-link">
                     <i class="fas fa-search-location"></i>
                     <span data-en="Track Progress" data-bn="অগ্রগতি দেখুন">Track Progress</span>
                 </a>
@@ -86,7 +86,7 @@
                     <span class="flag-icon">🇧🇩</span>
                     <span class="lang-text" id="lang-display">বাংলা</span>
                 </button>
-                <a href="login.html" class="officer-login">
+                <a href="{{ url('/login') }}" class="officer-login">
                     <i class="fas fa-shield-alt"></i>
                     <span data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</span>
                 </a>
@@ -142,12 +142,12 @@
 
                 <!-- CTA Buttons -->
                 <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
-                    <a href="feedback.html" class="btn-primary">
+                    <a href="{{ url('/submit-feedback') }}" class="btn-primary">
                         <i class="fas fa-paper-plane"></i>
                         <span data-en="Submit Your Feedback" data-bn="আপনার মতামত দিন">Submit Your Feedback</span>
                         <div class="btn-shine"></div>
                     </a>
-                    <a href="track.html" class="btn-secondary">
+                    <a href="{{ url('/track') }}" class="btn-secondary">
                         <i class="fas fa-search"></i>
                         <span data-en="Track Your Issue" data-bn="আপনার সমস্যা ট্র্যাক করুন">Track Your Issue</span>
                     </a>
@@ -541,9 +541,9 @@
                 <div class="footer-section">
                     <h3 data-en="Quick Links" data-bn="দ্রুত লিংক">Quick Links</h3>
                     <ul>
-                        <li><a href="feedback.html" data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</a></li>
-                        <li><a href="track.html" data-en="Track Status" data-bn="স্ট্যাটাস ট্র্যাক করুন">Track Status</a></li>
-                        <li><a href="login.html" data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</a></li>
+                        <li><a href="{{ url('/submit-feedback') }}" data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</a></li>
+                        <li><a href="{{ url('/track') }}" data-en="Track Status" data-bn="স্ট্যাটাস ট্র্যাক করুন">Track Status</a></li>
+                        <li><a href="{{ url('/login') }}" data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</a></li>
                     </ul>
                 </div>
 

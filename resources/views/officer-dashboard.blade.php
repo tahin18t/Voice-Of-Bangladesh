@@ -66,7 +66,7 @@
                 </div>
                 <div class="officer-info">
                     <div class="officer-avatar">
-                        <img src="./image/hero2.JPG" alt="Tahin" class="avatar-img">
+                        <img src="{{ asset('image/tahin.jpg') }}" alt="Tahin" class="avatar-img">
                         <div class="status-indicator online"></div>
                     </div>
                     <div class="officer-details">
@@ -75,9 +75,9 @@
                         <small data-en="Roads & Highways Ministry" data-bn="সড়ক ও মহাসড়ক মন্ত্রণালয়">Roads & Highways Ministry</small>
                     </div>
                 </div>
-                <button class="sidebar-toggle" id="sidebar-toggle">
+                <!-- <button class="sidebar-toggle" id="sidebar-toggle">
                     <i class="fas fa-bars"></i>
-                </button>
+                </button> -->
             </div>
 
             <nav class="sidebar-nav">
@@ -355,7 +355,7 @@
                                 <div class="ai-insight-card priority-low">
                                     <div class="insight-header">
                                         <div class="insight-icon">
-                                            <i class="fas fa-chart-trend-up"></i>
+                                            <i class="fas fa-chart-line"></i>
                                         </div>
                                         <div class="insight-priority">TREND ANALYSIS</div>
                                     </div>

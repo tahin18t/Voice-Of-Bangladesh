@@ -873,7 +873,7 @@ function navigateTo(section) {
             break;
         case 'feedback':
             // Navigate to feedback page
-            window.location.href = 'submit-feedback.html';
+            window.location.href = "{{ url('/submit-feedback') }}";
             break;
         case 'governance':
             // Navigate to intelligent governance section

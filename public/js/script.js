@@ -30,7 +30,7 @@ function initializeApp() {
     }
     
     // Track page functionality
-    if (window.location.pathname.includes('track.html')) {
+    if (window.location.pathname.includes("{{ url('/track') }}")) {
         initializeTrackPage();
     }
     
@@ -948,7 +948,7 @@ function handleLogin(e) {
             
             // Redirect after animation
             setTimeout(() => {
-                window.location.href = 'dashboard.html';
+                window.location.href = "{{ url('/index') }}";
             }, 3000);
         } else {
             // Show error modal
@@ -982,7 +982,7 @@ function logout() {
         
         // Redirect after a short delay
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = "{{ url('/index') }}";
         }, 1500);
     }
 }
@@ -1127,7 +1127,7 @@ function showError(message) {
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
         localStorage.removeItem('userSession');
-        window.location.href = 'index.html';
+        window.location.href = "{{ url('/index') }}";
     }
 }
 

@@ -28,15 +28,15 @@
 
             <!-- Navigation Menu -->
             <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">
+                <a href="{{ url('/index') }}" class="nav-link">
                     <i class="fas fa-home"></i>
                     <span data-en="Home" data-bn="হোম">Home</span>
                 </a>
-                <a href="submit-feedback.html" class="nav-link">
+                <a href="{{ url('/submit-feedback') }}" class="nav-link">
                     <i class="fas fa-comment-dots"></i>
                     <span data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</span>
                 </a>
-                <a href="track.html" class="nav-link active">
+                <a href="{{ url('/track') }}" class="nav-link active">
                     <i class="fas fa-search-location"></i>
                     <span data-en="Track Progress" data-bn="অগ্রগতি দেখুন">Track Progress</span>
                 </a>
@@ -48,7 +48,7 @@
                     <span class="flag-icon">🇧🇩</span>
                     <span class="lang-text" id="lang-display">বাংলা</span>
                 </button>
-                <a href="login.html" class="officer-login">
+                <a href="{{ url('/login') }}" class="officer-login">
                     <i class="fas fa-shield-alt"></i>
                     <span data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</span>
                 </a>
@@ -252,7 +252,7 @@
                         <i class="fas fa-print"></i>
                         Print Details
                     </button>
-                    <a href="feedback.html" class="btn btn-primary" data-en="Submit New Feedback" data-bn="নতুন মতামত দিন">
+                    <a href="{{ url('/submit-feedback') }}" class="btn btn-primary" data-en="Submit New Feedback" data-bn="নতুন মতামত দিন">
                         <i class="fas fa-plus"></i>
                         Submit New Feedback
                     </a>
@@ -318,10 +318,10 @@
                 <div class="footer-section">
                     <h4 class="footer-title" data-en="Quick Links" data-bn="দ্রুত লিংক">Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="index.html" data-en="Home" data-bn="হোম">Home</a></li>
-                        <li><a href="feedback.html" data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</a></li>
-                        <li><a href="track.html" data-en="Track Status" data-bn="স্ট্যাটাস দেখুন">Track Status</a></li>
-                        <li><a href="index.html#about" data-en="About" data-bn="সম্পর্কে">About</a></li>
+                        <li><a href="{{ url('/index') }}" data-en="Home" data-bn="হোম">Home</a></li>
+                        <li><a href="{{ url('/submit-feedback') }}" data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</a></li>
+                        <li><a href="{{ url('/track') }}" data-en="Track Status" data-bn="স্ট্যাটাস দেখুন">Track Status</a></li>
+                        <li><a href="{{ url('/index') }}" data-en="About" data-bn="সম্পর্কে">About</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

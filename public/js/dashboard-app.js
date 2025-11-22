@@ -677,7 +677,7 @@ class DashboardApp {
             this.showNotification('Logging out...', 'info');
             
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = "{{ url('/index') }}";
             }, 1500);
         }
     }
