@@ -25,13 +25,52 @@ FR6) Login & Signup
 FR7) Home Page
 
 Installation Guide:
+Prerequisites
+PHP >= 8.1
+Composer
+MySQL or MariaDB
+Node.js & NPM
+Git
+Step-by-Step Setup
+# 1. Clone the repository
+git clone https:https://github.com/tahin18t/Voice-Of-Bangladesh.git
+
+# 2. Install PHP dependencies
+composer install
+
+# 3. Install frontend assets
+npm install && npm run build
+
+# 4. Copy the environment file
+cp .env.example .env
+
+# 5. Generate application key
+php artisan key: generate
+
+# 6. Configurethe  database in .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=hims_db
+DB_USERNAME=root
+DB_PASSWORD=
+
+# 7. Run migrations & seed initial data
+php artisan migrate --seed
+
+# 8. (Optional) Create a symbolic link for storage
+php artisan storage: link
+
+# 9. Start the development server
+php artisan serve
+
 
 Output:
 The Voice of Bangladesh system successfully delivers a fully functional, AI-assisted digital governance platform designed to strengthen citizen–government communication. The final implementation meets all the planned functional requirements and provides an efficient, user-friendly experience for both citizens and government officers. The major outputs of the project are summarized below:
 
 1. Citizen Feedback Submission Interface
 
-A responsive and bilingual (Bangla + English) web portal enables citizens to submit complaints, suggestions, and feedback easily. The system captures detailed information including category, location, description, and attachments. The interface is optimized for both mobile and desktop usage.
+A responsive and bilingual (Bangla + English) web portal enables citizens to submit complaints, suggestions, and feedback easily. The system captures detailed information, including category, location, description, and attachments. The interface is optimized for both mobile and desktop usage.
 
 2. AI-Powered Categorization & Routing
 
@@ -75,12 +114,5 @@ First and foremost, we are profoundly grateful to our project supervisor, Md Mez
 We also wish to thank Daffodil International University, particularly the Department of Computer Science and Engineering, for providing us with the necessary resources, academic environment, and platform to undertake this ambitious initiative.
 This project would not have been possible without the dedicated effort and collaborative spirit of every team member. Each member's contribution was crucial to the project's success, and we are proud of the work accomplished together.
 Finally, we extend our thanks to our peers, friends, and families for their patience, understanding, and unwavering moral support during the intensive periods of development and documentation.
-
-Team Member & Task:
-Tahin: Officer Dashboard
-Prottoy: Submit Feedback
-Mahtab:tracking system
-Siam: login portal
-Moin: Main Dashboard
 
 
