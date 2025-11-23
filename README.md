@@ -84,7 +84,7 @@ Captures detailed information: category, region, description, and files.
 
 Optimized UI for mobile & desktop.
 
-🤖 2. AI-Powered Categorization & Routing
+2. AI-Powered Categorization & Routing
 
 AI model analyzes user feedback and:
 
@@ -102,7 +102,7 @@ Consistency
 
 Significantly reduces manual workload.
 
-📍 3. Issue Tracking System
+3. Issue Tracking System
 
 Citizens receive a unique Tracking ID.
 
@@ -118,7 +118,7 @@ Resolved
 
 Ensures transparency & public accountability.
 
-🏛️ 4. Officer Dashboard
+4. Officer Dashboard
 
 Secure dashboard for government officials.
 
