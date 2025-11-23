@@ -134,7 +134,7 @@ View analytics
 
 Improves workflow efficiency and departmental coordination.
 
-🔐 5. User Authentication Module
+ 5. User Authentication Module
 
 Secure login/signup for:
 
@@ -152,7 +152,7 @@ Role-based access control (RBAC)
 
 Ensures privacy and data protection.
 
-📊 6. Analytical Insights & Visualization
+6. Analytical Insights & Visualization
 
 Integrated analytics dashboard displays:
 
@@ -166,7 +166,7 @@ Average resolution time
 
 These insights assist policymakers in detecting recurring issues and planning interventions.
 
-🎨 7. Modern Responsive Frontend
+7. Modern Responsive Frontend
 
 Technologies & tools used:
 
@@ -182,23 +182,23 @@ Clean and intuitive UI/UX
 
 Fully responsive layout for all screen sizes
 
-🙏 Acknowledgement
+# Acknowledgement
 
 We express our heartfelt gratitude to everyone who supported the development of Voice of Bangladesh.
 
-👨‍🏫 Project Supervisor
+# Project Supervisor
 
 Md Mezbaul Islam Zion
 Thank you for your expert guidance, valuable feedback, and constant motivation. Your mentorship shaped both the technical and strategic aspects of this project.
 
-🎓 Institutional Support
+# Institutional Support
 
 We thank Daffodil International University and the Department of Computer Science & Engineering for providing resources, an excellent academic environment, and the platform to execute this project.
 
-👥 Team Contribution
+# Team Contribution
 
 This project is the result of the hard work and collaboration of every team member. Each individual's dedication played a crucial role in achieving the final outcome.
 
-❤️ Family & Friends
+# Family & Friends
 
 Thank you for your patience, understanding, and moral support throughout the development and documentation phases.
