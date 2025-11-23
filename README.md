@@ -65,20 +65,20 @@ php artisan storage: link
 php artisan serve
 
 
-🚀 Project Output Overview
-✅ 1. Citizen Feedback Submission Interface
+# Project Output Overview:
+1. Citizen Feedback Submission Interface
 
 Fully responsive and bilingual (Bangla & English) web portal.
 
 Allows citizens to submit:
 
-Complaints
+  Complaints
 
-Suggestions
+  Suggestions
 
-Feedback
+  Feedback
 
-Attachments
+  Attachments
 
 Captures detailed information: category, region, description, and files.
 
