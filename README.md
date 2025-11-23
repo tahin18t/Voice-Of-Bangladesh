@@ -6,23 +6,23 @@ The system supports bilingual interaction (Bangla and English), mobile responsiv
 Task Distribution:
 | Name                       | ID               | Task    |
 |----------------------------|------------------|---------|
-| Md Shahriar Mannan Prottoy | 0242220005101490 | Fr1 |
-| Mahtab Chowdhury           | 0242220005101076 | FR2 |
-| Shahriar Sakhawat Tahin    | 0242220005101383 | FR4 |
-| Md Shehabub Mobin Siam     | 0242220005101043 | FR7 |
-| Abdulla Al Moin            | 0242220005101382 | FR6 |
+| Md Shahriar Mannan Prottoy | 0242220005101490 | Fr1,FR2 |
+| Mahtab Chowdhury           | 0242220005101076 | FR3,FR2 |
+| Shahriar Sakhawat Tahin    | 0242220005101383 | FR4,FR2 |
+| Md Shehabub Mobin Siam     | 0242220005101043 | FR7,FR2 |
+| Abdulla Al Moin            | 0242220005101382 | FR6,FR2 |
 
 
 
 Feature List:
 functional Require ments:
-FR1) Submit Feedback
-FR2) Multi-lingual(English & Bengali)
-FR3) Track Issues
-FR4) Officer Portal
-FR5) AI Intelligence
-FR6) Login & Signup
-FR7) Home Page
+1) Submit Feedback
+2) Multi-lingual(English & Bengali)
+3) Track Issues
+4) Officer Portal
+5) AI Intelligence
+6) Login & Signup
+7) Home Page
 
 Installation Guide:
 Prerequisites
