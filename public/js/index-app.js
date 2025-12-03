@@ -3,9 +3,11 @@
  * World-class functionality for Bangladesh Government Portal
  */
 
+localStorage.setItem('cfpip-language', 'bn');
+
 class ModernGovernmentPortal {
     constructor() {
-        this.currentLanguage = 'en';
+        this.currentLanguage = 'bn';
         this.isLoaded = false;
         this.chartInstance = null;
         this.statsAnimated = false;
@@ -77,12 +79,15 @@ class ModernGovernmentPortal {
        ========================================================================= */
     
     setupLanguageSystem() {
-        // Check for saved language preference
+        // Check for saved language preference, default to 'bn'
         const savedLanguage = localStorage.getItem('cfpip-language');
         if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'bn')) {
             this.currentLanguage = savedLanguage;
+        } else {
+            this.currentLanguage = 'bn'; // Default to Bengali
         }
         
+        this.updateContent(); // Update all content to match current language
         this.updateLanguageDisplay();
         this.updateDirection(); // Set initial font without layout change
     }

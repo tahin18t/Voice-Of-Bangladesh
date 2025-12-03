@@ -1,7 +1,7 @@
 // Executive Intelligence Dashboard Application
 class ExecutiveDashboard {
     constructor() {
-        this.currentLanguage = 'en';
+        this.currentLanguage = 'bn';
         this.charts = {};
         this.realTimeData = {
             activeUsers: 47832,
