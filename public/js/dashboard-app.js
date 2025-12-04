@@ -1,7 +1,7 @@
 // Dashboard Application JavaScript
 class DashboardApp {
     constructor() {
-        this.currentLanguage = 'en';
+        this.currentLanguage = 'bn';
         this.currentSection = 'dashboard';
         this.notifications = [];
         this.feedbackData = [];

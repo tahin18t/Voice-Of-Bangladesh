@@ -1,7 +1,9 @@
 // Global Variables
-let currentLanguage = 'en';
+let currentLanguage = 'bn';
 let currentCarouselIndex = 0;
 let dashboardSidebarOpen = true;
+
+toggleLanguage()
 
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function() {
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Initialize Application
 function initializeApp() {
     // Restore saved language preference
-    const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
+    const savedLanguage = localStorage.getItem('preferredLanguage') || 'bn';
     currentLanguage = savedLanguage;
     updateLanguage();
     
@@ -94,7 +96,7 @@ function updateLanguage() {
     // Update all translatable elements first
     const translatableElements = document.querySelectorAll('[data-en][data-bn]');
     translatableElements.forEach(element => {
-        const translation = currentLanguage === 'en' ? element.getAttribute('data-en') : element.getAttribute('data-bn');
+        const translation = currentLanguage === 'bn' ? element.getAttribute('data-bn') : element.getAttribute('data-en');
         if (translation) {
             element.textContent = translation;
         }
@@ -103,9 +105,9 @@ function updateLanguage() {
     // Update placeholders
     const placeholderElements = document.querySelectorAll('[data-placeholder-en][data-placeholder-bn]');
     placeholderElements.forEach(element => {
-        const placeholder = currentLanguage === 'en' ? 
-            element.getAttribute('data-placeholder-en') : 
-            element.getAttribute('data-placeholder-bn');
+        const placeholder = currentLanguage === 'bn' ? 
+            element.getAttribute('data-placeholder-bn') : 
+            element.getAttribute('data-placeholder-en');
         if (placeholder) {
             element.setAttribute('placeholder', placeholder);
         }
@@ -113,12 +115,12 @@ function updateLanguage() {
     
     // Update document language (keep LTR direction for Bengali)
     document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.setAttribute('lang', currentLanguage === 'bn' ? 'bn' : 'en');
+    document.documentElement.setAttribute('lang', currentLanguage === 'en' ? 'en' : 'bn');
     
     // Update language display button specifically
     const langDisplay = document.getElementById('lang-display');
     if (langDisplay) {
-        langDisplay.textContent = currentLanguage === 'en' ? 'বাংলা' : 'English';
+        langDisplay.textContent = currentLanguage === 'bn' ? 'English' : 'বাংলা';
     }
     
     // Save preference

@@ -190,21 +190,19 @@
                         </div>
                     </div>
 
-                    <!-- Language Toggle -->
-                    <button class="lang-switch" onclick="toggleLanguage()">
-                        <span class="flag-icon">🇧🇩</span>
-                        <span class="lang-text" id="lang-display">বাংলা</span>
-                    </button>
-
                     <!-- Quick Actions -->
-                    <div class="quick-actions">
+                    <!-- <div class="quick-actions"> -->
+                        <button class="lang-switch" onclick="toggleLanguage()">
+                            <span class="flag-icon">🇧🇩</span>
+                            <span class="lang-text" id="lang-display">বাংলা</span>
+                        </button>
                         <button class="quick-action-btn" onclick="generateReport()" data-en="Generate Report" data-bn="রিপোর্ট তৈরি করুন">
                             <i class="fas fa-file-export"></i>
                         </button>
                         <button class="quick-action-btn" onclick="refreshData()" data-en="Refresh Data" data-bn="ডেটা রিফ্রেশ করুন">
                             <i class="fas fa-sync-alt"></i>
                         </button>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </header>
 

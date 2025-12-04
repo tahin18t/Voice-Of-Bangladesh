@@ -5,7 +5,7 @@
 
 class ModernGovernmentPortal {
     constructor() {
-        this.currentLanguage = 'en';
+        this.currentLanguage = 'bn';
         this.isLoaded = false;
         this.chartInstance = null;
         this.statsAnimated = false;
