@@ -220,8 +220,8 @@ Thank you for your patience, understanding, and moral support throughout the dev
 
 ![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/a7266cd98dca601e824fe14734463322a3d66322/UI%20(7).png)
 
-![image alt]()
+![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/806a24976a2f1bda14eea148136a22d7b4e00ccb/UI%20(8).png)
 
-![image alt]()
+![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/806a24976a2f1bda14eea148136a22d7b4e00ccb/UI%20(9).png)
 
-![image alt]()
+![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/806a24976a2f1bda14eea148136a22d7b4e00ccb/UI%20(10).png)
