@@ -350,6 +350,7 @@
 
      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ asset('js/api.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="{{ asset('js/track.js') }}"></script>
     <script src="{{ asset('js/tracking-app.js') }}"></script>

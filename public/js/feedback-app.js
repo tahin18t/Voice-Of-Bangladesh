@@ -539,16 +539,31 @@ class FeedbackFormSystem {
             // Show processing
             this.showProcessingModal();
             
-            // Simulate AI processing and submission
-            await this.simulateSubmission(formData);
+            // Check if user is authenticated
+            if (api && api.getToken()) {
+                // Send to API
+                const response = await api.createFeedback(formData);
+                
+                // Store tracking ID for success modal
+                this.lastTrackingId = response.data?.tracking_id || response.tracking_id || 'CFPIP-' + Date.now();
+                this.lastDepartment = response.data?.department || 'Government Department';
+                this.lastPriority = response.data?.priority || 'medium';
+            } else {
+                // For anonymous submissions, still send to API (backend will handle)
+                const response = await api.createFeedback(formData);
+                this.lastTrackingId = response.data?.tracking_id || response.tracking_id || 'CFPIP-' + Date.now();
+                this.lastDepartment = response.data?.department || 'Government Department';
+                this.lastPriority = response.data?.priority || 'medium';
+            }
             
             // Hide processing and show success
             this.hideProcessingModal();
             this.showSuccessModal();
             
         } catch (error) {
+            console.error('Submission error:', error);
             this.hideProcessingModal();
-            this.showNotification('Failed to submit feedback. Please try again.', 'error');
+            this.showNotification(error.message || 'Failed to submit feedback. Please try again.', 'error');
         }
     }
     
@@ -608,46 +623,61 @@ class FeedbackFormSystem {
     }
     
     showSuccessModal() {
-        const trackingId = this.generateTrackingId();
         const modal = document.getElementById('success-modal');
         
-        // Update tracking ID
+        // Update tracking ID with real API response
+        const trackingId = this.lastTrackingId || this.generateTrackingId();
         document.getElementById('generated-tracking-id').textContent = trackingId;
         
-        // Update AI classification results
+        // Update AI classification results with real data
         this.updateClassificationResults();
         
         // Show modal
         modal.classList.add('show');
         modal.style.display = 'flex';
     }
-    
+
     generateTrackingId() {
         const year = new Date().getFullYear();
         const randomNum = Math.floor(Math.random() * 999999).toString().padStart(6, '0');
         return `CFPIP-${year}-${randomNum}`;
     }
-    
+
     updateClassificationResults() {
-        const category = document.getElementById('category').value;
-        const urgency = document.querySelector('input[name="urgency"]:checked').value;
+        // Use real data from API if available
+        if (this.lastDepartment) {
+            document.getElementById('final-department').textContent = this.lastDepartment;
+        }
+        if (this.lastPriority) {
+            document.getElementById('final-priority').textContent = this.lastPriority.charAt(0).toUpperCase() + this.lastPriority.slice(1);
+            document.getElementById('final-priority').className = `priority-badge ${this.lastPriority.toLowerCase()}`;
+        }
         
-        // Map category to department
-        const categoryDepartmentMap = {
-            roads: 'Roads & Highways Ministry',
-            water: 'Water Resources Ministry',
-            health: 'Health & Family Welfare Ministry',
-            education: 'Education Ministry',
-            urban: 'Housing & Public Works Ministry',
-            environment: 'Environment Ministry',
-            agriculture: 'Agriculture Ministry',
-            transport: 'Road Transport Ministry',
-            electricity: 'Power Division'
-        };
-        
-        const department = categoryDepartmentMap[category] || 'General Administration';
-        const priority = urgency.charAt(0).toUpperCase() + urgency.slice(1);
-        
+        // Fallback to form data if API data not available
+        if (!this.lastDepartment) {
+            const category = document.getElementById('category').value;
+            
+            // Map category to department
+            const categoryDepartmentMap = {
+                roads: 'Roads & Highways Ministry',
+                water: 'Water Resources Ministry',
+                health: 'Health & Family Welfare Ministry',
+                education: 'Education Ministry',
+                urban: 'Housing & Public Works Ministry',
+                environment: 'Environment Ministry',
+                agriculture: 'Agriculture Ministry',
+                transport: 'Road Transport Ministry',
+                electricity: 'Power Division'
+            };
+            
+            const department = categoryDepartmentMap[category] || 'General Administration';
+            const urgency = document.querySelector('input[name="urgency"]:checked').value;
+            const priority = urgency.charAt(0).toUpperCase() + urgency.slice(1);
+            
+            document.getElementById('final-department').textContent = department;
+            document.getElementById('final-priority').textContent = priority;
+            document.getElementById('final-priority').className = `priority-badge ${urgency.toLowerCase()}`;
+        }
         document.getElementById('final-department').textContent = department;
         document.getElementById('final-priority').textContent = priority;
         document.getElementById('final-priority').className = `priority-badge ${urgency}`;

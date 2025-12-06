@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Feedback;
+use App\Models\Assignment;
+use App\Http\Requests\StoreFeedbackRequest;
+use App\Http\Requests\UpdateFeedbackRequest;
+
+class FeedbackController extends Controller
+{
+    public function index(Request $request)
+    {
+        $query = Feedback::query();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $feedbacks = $query->latest()->paginate(15);
+        return response()->json($feedbacks);
+    }
+
+    public function store(StoreFeedbackRequest $request)
+    {
+        $data = $request->validated();
+        $data['tracking_id'] = $data['tracking_id'] ?? 'FB-'.time();
+        $feedback = Feedback::create($data);
+
+        return response()->json($feedback, 201);
+    }
+
+    public function show($id)
+    {
+        $feedback = Feedback::with('aiInsight','assignments')->findOrFail($id);
+        return response()->json($feedback);
+    }
+
+    public function update(UpdateFeedbackRequest $request, $id)
+    {
+        $feedback = Feedback::findOrFail($id);
+        $feedback->update($request->validated());
+        return response()->json($feedback);
+    }
+
+    public function assign(Request $request, $id)
+    {
+        $feedback = Feedback::findOrFail($id);
+        $request->validate(['assigned_to' => 'required|exists:users,id','note' => 'nullable|string']);
+
+        $assignment = Assignment::create([
+            'feedback_id' => $feedback->id,
+            'assigned_by' => $request->user() ? $request->user()->id : null,
+            'assigned_to' => $request->assigned_to,
+            'note' => $request->note,
+            'status' => 'assigned',
+        ]);
+
+        $feedback->assigned_to = $request->assigned_to;
+        $feedback->status = 'in-progress';
+        $feedback->save();
+
+        return response()->json(['assignment' => $assignment, 'feedback' => $feedback], 201);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $feedback = Feedback::findOrFail($id);
+        $request->validate(['status' => 'required|in:pending,in-progress,resolved,closed']);
+        $feedback->status = $request->status;
+        $feedback->save();
+        return response()->json($feedback);
+    }
+}
