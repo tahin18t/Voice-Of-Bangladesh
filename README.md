@@ -203,5 +203,6 @@ This project is the result of the hard work and collaboration of every team memb
 
 Thank you for your patience, understanding, and moral support throughout the development and documentation phases.
 
+<h1 align="center">UI</h1>
 ![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
 
