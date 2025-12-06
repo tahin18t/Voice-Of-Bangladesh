@@ -3,10 +3,17 @@ let currentLanguage = 'en';
 let currentCarouselIndex = 0;
 let dashboardSidebarOpen = true;
 
-let loginBtn = document.querySelector(".login-btn")
-loginBtn.addEventListener('click', ()=>{
-    window.location.href = 'officer-dashboard';
-})
+let loginBtn = document.querySelector(".login-btn");
+
+loginBtn.addEventListener('click', () => {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if(email && password){
+        // Redirect if both fields are filled
+        window.location.href = 'officer-dashboard';
+    }
+});
 
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function () {
