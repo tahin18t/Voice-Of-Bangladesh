@@ -214,11 +214,11 @@ Thank you for your patience, understanding, and moral support throughout the dev
 
 ![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2f2f073affceffea831ea13b1f935ca3e45bb9f4/UI%20(4).png)
 
-![image alt]()
+![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/24020c821ee6952549aa86208e1b50c2c925d423/UI%20(5).png)
 
-![image alt]()
+![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/a7266cd98dca601e824fe14734463322a3d66322/UI%20(6).png)
 
-![image alt]()
+![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/a7266cd98dca601e824fe14734463322a3d66322/UI%20(7).png)
 
 ![image alt]()
 
