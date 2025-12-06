@@ -194,40 +194,20 @@ class DashboardApp {
         }
     }
 
-    loadDashboardData() {
-        // Simulate loading feedback data
-        this.feedbackData = [
-            {
-                id: 'CFPIP-2024-001234',
-                title: 'Road damage complaint from rural area',
-                category: 'Roads & Highways',
-                priority: 'High',
-                status: 'Pending',
-                location: 'Chittagong, Bangladesh',
-                date: '2024-12-07 10:30 AM',
-                description: 'The main road connecting our village to the district headquarters has developed multiple large potholes making it dangerous for vehicles and pedestrians.',
-                aiAnalysis: {
-                    confidence: 96,
-                    urgencyScore: 8.5,
-                    suggestedAction: 'Site inspection within 48 hours'
-                }
-            },
-            {
-                id: 'CFPIP-2024-001235',
-                title: 'Water supply disruption in urban area',
-                category: 'Water & Sanitation',
-                priority: 'Medium',
-                status: 'In Progress',
-                location: 'Dhaka, Bangladesh',
-                date: '2024-12-07 09:15 AM',
-                description: 'Water supply has been disrupted in our residential area for the past 3 days.',
-                aiAnalysis: {
-                    confidence: 92,
-                    urgencyScore: 7.2,
-                    suggestedAction: 'Contact water department immediately'
-                }
+    async loadDashboardData() {
+        try {
+            // Fetch feedbacks from API
+            if (api && api.getToken()) {
+                const response = await api.getFeedbacks({ status: 'all', per_page: 10 });
+                this.feedbackData = response.data || [];
+            } else {
+                // Fallback to mock data if not authenticated
+                this.feedbackData = [];
             }
-        ];
+        } catch (error) {
+            console.error('Error loading dashboard data:', error);
+            this.feedbackData = [];
+        }
 
         this.populateFeedbacksTable();
     }
@@ -262,40 +242,25 @@ class DashboardApp {
 
         tbody.innerHTML = '';
         
-        // Generate more sample data for demo
-        const sampleFeedbacks = [
-            ...this.feedbackData,
-            {
-                id: 'CFPIP-2024-001236',
-                title: 'Healthcare facility improvement needed',
-                category: 'Health Services',
-                priority: 'Medium',
-                status: 'Pending',
-                location: 'Sylhet, Bangladesh',
-                date: '2024-12-06 14:20 PM'
-            },
-            {
-                id: 'CFPIP-2024-001237',
-                title: 'School infrastructure concerns',
-                category: 'Education',
-                priority: 'Low',
-                status: 'Resolved',
-                location: 'Rangpur, Bangladesh',
-                date: '2024-12-05 11:45 AM'
-            }
-        ];
+        const feedbacks = this.feedbackData.length > 0 ? this.feedbackData : [];
 
-        sampleFeedbacks.forEach(feedback => {
+        feedbacks.forEach(feedback => {
             const row = document.createElement('tr');
+            const category = feedback.category || 'Unknown';
+            const priority = feedback.priority || 'low';
+            const status = feedback.status || 'pending';
+            const location = feedback.location || 'N/A';
+            const createdAt = feedback.created_at ? new Date(feedback.created_at).toLocaleString() : 'N/A';
+
             row.innerHTML = `
                 <td><input type="checkbox" name="feedback-select" value="${feedback.id}"></td>
-                <td><strong>${feedback.id}</strong></td>
+                <td><strong>${feedback.tracking_id || feedback.id}</strong></td>
                 <td>${feedback.title}</td>
-                <td>${feedback.category}</td>
-                <td><span class="priority-badge ${feedback.priority.toLowerCase()}">${feedback.priority}</span></td>
-                <td><span class="status-badge ${feedback.status.toLowerCase().replace(' ', '-')}">${feedback.status}</span></td>
-                <td>${feedback.location}</td>
-                <td>${feedback.date}</td>
+                <td>${category}</td>
+                <td><span class="priority-badge ${priority.toLowerCase()}">${priority}</span></td>
+                <td><span class="status-badge ${status.toLowerCase().replace(' ', '-')}">${status}</span></td>
+                <td>${location}</td>
+                <td>${createdAt}</td>
                 <td>
                     <div style="display: flex; gap: 0.5rem;">
                         <button class="btn btn-sm btn-primary" onclick="dashboardApp.viewFeedback('${feedback.id}')">
@@ -482,41 +447,129 @@ class DashboardApp {
     }
 
     // Feedback management functions
-    viewFeedback(feedbackId) {
-        const feedback = this.feedbackData.find(f => f.id === feedbackId);
-        if (!feedback) return;
+    async viewFeedback(feedbackId) {
+        try {
+            if (api && api.getToken()) {
+                const response = await api.getFeedback(feedbackId);
+                const feedback = response.data || response;
+                
+                // Populate modal with feedback data
+                document.getElementById('modal-tracking-id').textContent = feedback.tracking_id || feedback.id;
+                document.getElementById('modal-category').textContent = feedback.category || 'Unknown';
+                document.getElementById('modal-priority').textContent = feedback.priority || 'low';
+                document.getElementById('modal-priority').className = `priority-badge ${(feedback.priority || 'low').toLowerCase()}`;
+                document.getElementById('modal-status').textContent = feedback.status || 'pending';
+                document.getElementById('modal-status').className = `status-badge ${(feedback.status || 'pending').toLowerCase().replace(' ', '-')}`;
+                document.getElementById('modal-location').textContent = feedback.location || 'N/A';
+                document.getElementById('modal-date').textContent = feedback.created_at ? new Date(feedback.created_at).toLocaleString() : 'N/A';
+                document.getElementById('modal-description').textContent = feedback.description || 'No detailed description available.';
 
-        // Populate modal with feedback data
-        document.getElementById('modal-tracking-id').textContent = feedback.id;
-        document.getElementById('modal-category').textContent = feedback.category;
-        document.getElementById('modal-priority').textContent = feedback.priority;
-        document.getElementById('modal-priority').className = `priority-badge ${feedback.priority.toLowerCase()}`;
-        document.getElementById('modal-status').textContent = feedback.status;
-        document.getElementById('modal-status').className = `status-badge ${feedback.status.toLowerCase().replace(' ', '-')}`;
-        document.getElementById('modal-location').textContent = feedback.location;
-        document.getElementById('modal-date').textContent = feedback.date;
-        document.getElementById('modal-description').textContent = feedback.description || 'No detailed description available.';
+                // Show modal
+                this.showModal('feedback-detail-modal');
+            } else {
+                // Fallback to local data if not authenticated
+                const feedback = this.feedbackData.find(f => f.id === feedbackId);
+                if (!feedback) {
+                    this.showNotification('Feedback not found', 'error');
+                    return;
+                }
+                
+                document.getElementById('modal-tracking-id').textContent = feedback.tracking_id || feedback.id;
+                document.getElementById('modal-category').textContent = feedback.category || 'Unknown';
+                document.getElementById('modal-priority').textContent = feedback.priority || 'low';
+                document.getElementById('modal-priority').className = `priority-badge ${(feedback.priority || 'low').toLowerCase()}`;
+                document.getElementById('modal-status').textContent = feedback.status || 'pending';
+                document.getElementById('modal-status').className = `status-badge ${(feedback.status || 'pending').toLowerCase().replace(' ', '-')}`;
+                document.getElementById('modal-location').textContent = feedback.location || 'N/A';
+                document.getElementById('modal-date').textContent = feedback.created_at || feedback.date || 'N/A';
+                document.getElementById('modal-description').textContent = feedback.description || 'No detailed description available.';
 
-        // Show modal
-        this.showModal('feedback-detail-modal');
+                this.showModal('feedback-detail-modal');
+            }
+        } catch (error) {
+            console.error('Error viewing feedback:', error);
+            this.showNotification('Error loading feedback details', 'error');
+        }
     }
 
-    assignFeedback(feedbackId) {
-        console.log('Assigning feedback:', feedbackId);
-        // Implement assignment logic here
-        this.showNotification('Feedback assigned successfully!', 'success');
+    async assignFeedback(feedbackId) {
+        try {
+            // Show assignment dialog or modal
+            const assigneeId = prompt('Enter assignee user ID:');
+            if (!assigneeId) return;
+
+            if (api && api.getToken()) {
+                const response = await api.assignFeedback(feedbackId, assigneeId);
+                this.showNotification('Feedback assigned successfully!', 'success');
+                // Refresh feedbacks list
+                await this.loadDashboardData();
+            } else {
+                this.showNotification('Please log in to assign feedback', 'error');
+            }
+        } catch (error) {
+            console.error('Error assigning feedback:', error);
+            this.showNotification('Error assigning feedback', 'error');
+        }
     }
 
-    bulkAssign() {
-        const selected = document.querySelectorAll('input[name="feedback-select"]:checked');
-        console.log('Bulk assigning feedbacks:', selected.length);
-        this.showNotification(`${selected.length} feedback(s) assigned successfully!`, 'success');
+    async bulkAssign() {
+        try {
+            const selected = document.querySelectorAll('input[name="feedback-select"]:checked');
+            if (selected.length === 0) {
+                this.showNotification('Please select at least one feedback', 'warning');
+                return;
+            }
+
+            const assigneeId = prompt('Enter assignee user ID:');
+            if (!assigneeId) return;
+
+            if (api && api.getToken()) {
+                const feedbackIds = Array.from(selected).map(cb => cb.value);
+                
+                // Assign each feedback
+                for (const feedbackId of feedbackIds) {
+                    await api.assignFeedback(feedbackId, assigneeId);
+                }
+                
+                this.showNotification(`${selected.length} feedback(s) assigned successfully!`, 'success');
+                await this.loadDashboardData();
+            } else {
+                this.showNotification('Please log in to assign feedbacks', 'error');
+            }
+        } catch (error) {
+            console.error('Error bulk assigning feedbacks:', error);
+            this.showNotification('Error assigning feedbacks', 'error');
+        }
     }
 
-    bulkUpdateStatus() {
-        const selected = document.querySelectorAll('input[name="feedback-select"]:checked');
-        console.log('Bulk updating status for:', selected.length);
-        this.showNotification(`Status updated for ${selected.length} feedback(s)!`, 'success');
+    async bulkUpdateStatus() {
+        try {
+            const selected = document.querySelectorAll('input[name="feedback-select"]:checked');
+            if (selected.length === 0) {
+                this.showNotification('Please select at least one feedback', 'warning');
+                return;
+            }
+
+            const newStatus = prompt('Enter new status (pending, in_progress, resolved, closed):');
+            if (!newStatus) return;
+
+            if (api && api.getToken()) {
+                const feedbackIds = Array.from(selected).map(cb => cb.value);
+                
+                // Update status for each feedback
+                for (const feedbackId of feedbackIds) {
+                    await api.updateFeedbackStatus(feedbackId, newStatus);
+                }
+                
+                this.showNotification(`Status updated for ${selected.length} feedback(s)!`, 'success');
+                await this.loadDashboardData();
+            } else {
+                this.showNotification('Please log in to update feedbacks', 'error');
+            }
+        } catch (error) {
+            console.error('Error bulk updating status:', error);
+            this.showNotification('Error updating feedback status', 'error');
+        }
     }
 
     bulkExport() {

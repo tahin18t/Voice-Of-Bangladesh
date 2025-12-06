@@ -85,14 +85,14 @@
                     </a>
                 </div>
 
-                <button type="button" class="login-btn" data-en="Sign In" data-bn="সাইন ইন"
-                    onclick="window.location.href='{{ url('/officer-dashboard') }}'">
+                <button type="submit" class="login-btn" data-en="Sign In" data-bn="সাইন ইন">
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Sign In</span>
                     <div class="btn-loader" id="login-loader" style="display: none;">
                         <i class="fas fa-spinner fa-spin"></i>
                     </div>
                 </button>
+
 
             </form>
 
@@ -132,7 +132,8 @@
                 <a href="mailto:support@cfpip.gov.bd" class="support-link">support@cfpip.gov.bd</a>
 
                 <div class="footer-links">
-                    <a href="{{ url('/index') }}" class="footer-link" data-en="← Back to Home" data-bn="← হোমে ফিরুন">← Back to
+                    <a href="{{ url('/index') }}" class="footer-link" data-en="← Back to Home" data-bn="← হোমে ফিরুন">←
+                        Back to
                         Home</a>
                     <span class="divider">|</span>
                     <a href="#" class="footer-link" data-en="Privacy Policy" data-bn="গোপনীয়তা নীতি">Privacy Policy</a>
@@ -211,6 +212,7 @@
         </div>
     </div>
 
+    <script src="{{ asset('js/api.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
 </body>
 

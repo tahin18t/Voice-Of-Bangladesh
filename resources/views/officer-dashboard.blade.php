@@ -1026,6 +1026,7 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ asset('js/api.js') }}"></script>
     <script src="{{ asset('js/modern-app.js') }}"></script>
     <script src="{{ asset('js/dashboard-app.js') }}"></script>
     <script src="{{ asset('js/executive-app.js') }}"></script>
