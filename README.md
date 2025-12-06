@@ -205,8 +205,9 @@ Thank you for your patience, understanding, and moral support throughout the dev
 
 <h1 align="center">UI</h1>
 
-
-![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
+<div style="text-align: center;">
+    ![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
+</div>
 
 ![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2f2f073affceffea831ea13b1f935ca3e45bb9f4/UI%20(2).png)
 
