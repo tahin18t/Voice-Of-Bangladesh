@@ -76,9 +76,9 @@
                     </div>
                 </div>
             </div>
-                <!-- <button class="sidebar-toggle" id="sidebar-toggle">
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
                     <i class="fas fa-bars"></i>
-                </button> -->
+                </button>
 
             <nav class="sidebar-nav">
                 <ul class="nav-menu">

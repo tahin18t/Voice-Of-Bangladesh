@@ -382,6 +382,20 @@
     background: rgba(0, 0, 0, 0.1);
 }
 
+.sidebar.collapsed .sidebar-footer .quick-stats,
+.sidebar.collapsed .sidebar-footer .logout-btn span {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-footer {
+    align-items: center;
+    padding: 1rem 0.75rem;
+}
+
+.sidebar.collapsed .logout-btn {
+    justify-content: center;
+}
+
 .logout-btn {
     width: 100%;
     padding: 0.875rem 1rem;
@@ -1358,7 +1372,7 @@
 }
 
 .sidebar.collapsed {
-    width: 70px;
+    width: var(--sidebar-collapsed-width);
 }
 
 .sidebar-header {
@@ -1367,11 +1381,20 @@
     position: relative;
 }
 
+.sidebar.collapsed .sidebar-header {
+    padding: 1rem;
+    text-align: center;
+}
+
 .sidebar-brand {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
+}
+
+.sidebar.collapsed .sidebar-brand .brand-text {
+    display: none;
 }
 
 .brand-logo {
@@ -1398,6 +1421,12 @@
 .officer-avatar {
     position: relative;
     flex-shrink: 0;
+}
+
+.sidebar.collapsed .officer-avatar .avatar-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
 }
 
 .avatar-img {
@@ -1434,6 +1463,10 @@
     opacity: 0.8;
 }
 
+.sidebar.collapsed .officer-details {
+    display: none;
+}
+
 .officer-details small {
     font-size: 0.75rem;
     opacity: 0.6;
@@ -1467,6 +1500,17 @@
     display: flex;
     flex-direction: column;
     padding: 1rem 0;
+}
+
+.sidebar.collapsed .nav-link {
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+}
+
+.sidebar.collapsed .nav-link span,
+.sidebar.collapsed .nav-indicator,
+.sidebar.collapsed .notification-badge {
+    display: none;
 }
 
 .nav-menu {
@@ -1625,6 +1669,11 @@
 
 .main-content {
     width: calc(100% - var(--sidebar-width));
+}
+
+.sidebar.collapsed ~ .main-content {
+    margin-left: var(--sidebar-collapsed-width);
+    width: calc(100% - var(--sidebar-collapsed-width));
 }
 
 @media (max-width: 1024px) {
@@ -2931,8 +2980,11 @@
 @media (max-width: 768px) {
     .sidebar {
         position: fixed;
-        left: -280px;
+        left: -240px;
+        width: 240px;
         z-index: 1000;
+        height: 100vh;
+        overflow-y: auto;
         transition: left 0.3s ease;
     }
     
@@ -2942,6 +2994,8 @@
     
     .main-content {
         margin-left: 0;
+        width: 100%;
+        min-height: 100vh;
     }
     
     .mobile-sidebar-toggle {

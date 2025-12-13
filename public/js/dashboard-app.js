@@ -74,6 +74,31 @@ class DashboardApp {
             });
         }
 
+        // Close collapsed sidebar when clicking anywhere outside its buttons/links
+        document.addEventListener('click', (e) => {
+            if (!sidebar) return;
+            const clickedInsideSidebar = sidebar.contains(e.target);
+            const clickedToggle = sidebarToggle && sidebarToggle.contains(e.target);
+            const clickedMobileToggle = mobileSidebarToggle && mobileSidebarToggle.contains(e.target);
+
+            // On desktop: if collapsed and click outside, expand
+            if (!clickedInsideSidebar && !clickedToggle && !clickedMobileToggle) {
+                if (sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.remove('collapsed');
+                    // Adjust main content width on expand
+                    const mainContent = document.querySelector('.main-content');
+                    if (mainContent) {
+                        mainContent.style.marginLeft = '';
+                        mainContent.style.width = '';
+                    }
+                }
+                // On mobile: if open and clicked outside, close
+                if (sidebar.classList.contains('mobile-open')) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            }
+        });
+
         // Close sidebar on mobile when clicking outside
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
