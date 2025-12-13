@@ -209,7 +209,9 @@ Thank you for your patience, understanding, and moral support throughout the dev
 <img width="852" height="910" alt="image" src="https://github.com/user-attachments/assets/8b7b7220-b6ca-4494-918b-79550cd31867" />
 <img width="865" height="881" alt="image" src="https://github.com/user-attachments/assets/affa6c0b-7b7d-498d-a357-043d6629e382" />
 
+<img width="666" height="907" alt="image" src="https://github.com/user-attachments/assets/d9fc97e0-88b3-4b98-8445-3e33121bc2d8" />
 
+<img width="642" height="870" alt="image" src="https://github.com/user-attachments/assets/f7853436-1d13-4482-8118-62b76d630a38" />
 
 
 
