@@ -204,6 +204,11 @@ This project is the result of the hard work and collaboration of every team memb
 Thank you for your patience, understanding, and moral support throughout the development and documentation phases.
 
 <h1 align="center">UI</h1>
+<img width="1398" height="760" alt="image" src="https://github.com/user-attachments/assets/5676af26-242f-45db-9513-7e9a2e696ebb" />
+
+<img width="852" height="910" alt="image" src="https://github.com/user-attachments/assets/8b7b7220-b6ca-4494-918b-79550cd31867" />
+
+
 
 
 ![image alt](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
