@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SignupController;
 
 Route::get('/', function () {
     return view('index');
@@ -26,3 +27,6 @@ Route::get('/track', function () {
 Route::get('/public-insights', function () {
     return view('index');
 });
+
+Route::get('/signup', [SignupController::class, 'create'])->name('signup.show');
+Route::post('/signup', [SignupController::class, 'store'])->name('signup.store');

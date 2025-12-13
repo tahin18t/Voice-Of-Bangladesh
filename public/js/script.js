@@ -3,17 +3,10 @@ let currentLanguage = 'en';
 let currentCarouselIndex = 0;
 let dashboardSidebarOpen = true;
 
-let loginBtn = document.querySelector(".login-btn");
-
-loginBtn.addEventListener('click', () => {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
-    if(email && password){
-        // Redirect if both fields are filled
-        window.location.href = 'officer-dashboard';
-    }
-});
+// Remove automatic redirect on login button click so we use the proper
+// login form submission flow (which calls the API and shows errors).
+// The login button will be handled by the form submit handler attached
+// in `initializeForms()` -> `handleLogin()`.
 
 // DOM Content Loaded Event
 document.addEventListener('DOMContentLoaded', function () {
@@ -447,9 +440,10 @@ function handleTrackSubmit(e) {
     }
 
     // Validate format
-    const trackingIdPattern = /^CFP-\d{4}-\d{5}$/;
+    // Accept legacy CFP/CFPIP IDs or new API-generated FB-XXXXXXXX IDs
+    const trackingIdPattern = /^(?:CFPIP|CFP)-\d{4}-\d{5,6}$|^FB-[A-Z0-9]{6,12}$/i;
     if (!trackingIdPattern.test(trackingId)) {
-        showError('Please enter a valid tracking ID format (CFP-YYYY-XXXXX)');
+        showError('Please enter a valid tracking ID (e.g. FB-ABC12345 or CFPIP-2025-123456)');
         return;
     }
 
@@ -470,44 +464,66 @@ function searchFeedback(trackingId) {
     searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
     searchBtn.disabled = true;
 
-    setTimeout(() => {
-        const data = window.sampleTrackingData && window.sampleTrackingData[trackingId];
-
-        if (data) {
-            displayTrackingResults(data);
-            // Use CSS-defined grid layout for proper responsive design
-            resultsContainer.style.display = 'grid';
-        } else {
-            // errorContainer.style.display = 'block';
-            resultsContainer.style.display = 'grid';
-        }
-
-        searchBtn.innerHTML = originalText;
-        searchBtn.disabled = false;
-    }, 1500);
+    // Call API to search for feedback
+    const apiClient = new ApiClient();
+    apiClient.getFeedbackByTracking(trackingId)
+        .then(response => {
+            if (response.data) {
+                displayTrackingResults(response.data);
+                resultsContainer.style.display = 'grid';
+            } else {
+                errorContainer.style.display = 'block';
+                errorContainer.textContent = 'No feedback found with this tracking ID.';
+            }
+        })
+        .catch(error => {
+            console.error('Search error:', error);
+            errorContainer.style.display = 'block';
+            errorContainer.textContent = 'Error searching for feedback. Please try again.';
+        })
+        .finally(() => {
+            searchBtn.innerHTML = originalText;
+            searchBtn.disabled = false;
+        });
 }
 
 function displayTrackingResults(data) {
-    // Update feedback details
-    document.getElementById('feedback-id').textContent = data;
-    document.getElementById('feedback-category').textContent = data.category;
-    document.getElementById('feedback-date').textContent = data.date;
-    document.getElementById('feedback-location').textContent = data.location;
-    document.getElementById('feedback-department').textContent = data.department;
-    document.getElementById('feedback-desc').textContent = data.description;
+    // Update feedback details from API response
+    document.getElementById('feedback-id').textContent = data.tracking_id || data.id || 'N/A';
+    document.getElementById('feedback-category').textContent = data.category || 'N/A';
+    document.getElementById('feedback-date').textContent = new Date(data.created_at).toLocaleDateString() || 'N/A';
+    document.getElementById('feedback-location').textContent = data.location || 'N/A';
+    document.getElementById('feedback-department').textContent = data.department || 'Government';
+    document.getElementById('feedback-desc').textContent = data.description || data.title || 'N/A';
     document.getElementById('current-status').textContent = getStatusText(data.status);
 
-    // Update timeline
-    updateTimeline(data.timeline);
-
-    // Show response if resolved
-    if (data.response) {
-        displayResponse(data.response);
+    // Update AI insights if available
+    if (data.ai_insight) {
+        const insightContainer = document.querySelector('.ai-insights');
+        if (insightContainer) {
+            insightContainer.innerHTML = `
+                <div class="insight-item">
+                    <h4>AI Analysis</h4>
+                    <p><strong>Summary:</strong> ${data.ai_insight.summary || 'Processing...'}</p>
+                    <p><strong>Confidence:</strong> ${data.ai_insight.confidence_score}%</p>
+                    <p><strong>Urgency:</strong> ${data.ai_insight.urgency_score}%</p>
+                    <p><strong>Suggested Action:</strong> ${data.ai_insight.suggested_action || 'N/A'}</p>
+                </div>
+            `;
+        }
     }
 
-    // Show rating if resolved
-    if (data.status === 'resolved') {
-        document.getElementById('rating-card').style.display = 'block';
+    // Update assignment info if available
+    if (data.assigned_to) {
+        const assignmentContainer = document.querySelector('.assignment-info');
+        if (assignmentContainer) {
+            assignmentContainer.innerHTML = `
+                <div class="assignment-item">
+                    <h4>Assigned To</h4>
+                    <p><strong>Officer:</strong> ${data.assigned_to}</p>
+                </div>
+            `;
+        }
     }
 }
 
@@ -542,7 +558,11 @@ function getStatusText(status) {
         'received': 'Received',
         'review': 'Under Review',
         'action': 'Action Taken',
-        'resolved': 'Resolved'
+        'pending': 'Pending',
+        'assigned': 'Assigned',
+        'in_progress': 'In Progress',
+        'resolved': 'Resolved',
+        'closed': 'Closed'
     };
     return statusMap[status] || status;
 }
@@ -771,21 +791,58 @@ function refreshDashboard() {
 }
 
 function updateDashboardStats() {
-    // Animate numbers
-    const stats = [
-        { element: 'total-feedback', target: Math.floor(Math.random() * 1000) + 12000 },
-        { element: 'resolved-issues', target: Math.floor(Math.random() * 1000) + 8000 },
-        { element: 'active-depts', target: 24 },
-        { element: 'satisfaction', target: Math.floor(Math.random() * 10) + 85 }
-    ];
+    // Fetch real stats from the API when possible. Fallback to previous
+    // random/sample values if the network request fails.
+    (async () => {
+        try {
+            const apiClient = new ApiClient();
 
-    stats.forEach(stat => {
-        const element = document.getElementById(stat.element);
-        if (element) {
-            const suffix = stat.element === 'satisfaction' ? '%' : '';
-            animateNumber(element, stat.target, suffix);
+            // Use paginated endpoint to get totals. per_page=1 to minimize payload.
+            const totalResp = await apiClient.getFeedbacks({ per_page: 1 });
+            const total = totalResp.total || 0;
+
+            const resolvedResp = await apiClient.getFeedbacks({ per_page: 1, status: 'resolved' });
+            const resolved = resolvedResp.total || 0;
+
+            const inProgressResp = await apiClient.getFeedbacks({ per_page: 1, status: 'in_progress' });
+            const inProgress = inProgressResp.total || 0;
+
+            // Compute simple derived metrics
+            const satisfaction = Math.round(total === 0 ? 0 : (resolved / Math.max(1, total)) * 100);
+            const activeDepts =  (new Set((totalResp.data || []).map(f => f.department)).size) || 0;
+
+            const stats = [
+                { element: 'total-feedback', target: total },
+                { element: 'resolved-issues', target: resolved },
+                { element: 'active-depts', target: activeDepts },
+                { element: 'satisfaction', target: satisfaction }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.element);
+                if (element) {
+                    const suffix = stat.element === 'satisfaction' ? '%' : '';
+                    animateNumber(element, stat.target, suffix);
+                }
+            });
+        } catch (e) {
+            // Network failed — fallback to previous mock behaviour so UI isn't blank.
+            const stats = [
+                { element: 'total-feedback', target: Math.floor(Math.random() * 1000) + 12000 },
+                { element: 'resolved-issues', target: Math.floor(Math.random() * 1000) + 8000 },
+                { element: 'active-depts', target: 24 },
+                { element: 'satisfaction', target: Math.floor(Math.random() * 10) + 85 }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.element);
+                if (element) {
+                    const suffix = stat.element === 'satisfaction' ? '%' : '';
+                    animateNumber(element, stat.target, suffix);
+                }
+            });
         }
-    });
+    })();
 }
 
 function animateNumber(element, target, suffix = '') {
@@ -884,6 +941,9 @@ function initializeLoginPage() {
 
     // Remember credentials
     loadRememberedCredentials();
+
+    // Auto-fill (and optionally submit) when email/password are provided in the URL
+    applyLoginQueryParams();
 }
 
 function togglePassword() {
@@ -896,6 +956,32 @@ function togglePassword() {
     } else {
         passwordInput.type = 'password';
         eyeIcon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
+
+function applyLoginQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get('email');
+    const passwordParam = params.get('password');
+
+    if (!emailParam && !passwordParam) {
+        return;
+    }
+
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginForm = document.getElementById('login-form');
+
+    if (emailInput && emailParam) {
+        emailInput.value = decodeURIComponent(emailParam);
+    }
+    if (passwordInput && passwordParam) {
+        passwordInput.value = decodeURIComponent(passwordParam);
+    }
+
+    // Auto-submit if both are present
+    if (loginForm && emailParam && passwordParam) {
+        loginForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
 }
 
@@ -930,7 +1016,6 @@ function handleLogin(e) {
 
     // Show loading
     const loginBtn = document.querySelector('.login-btn');
-
     const loader = document.getElementById('login-loader');
     const btnText = loginBtn.querySelector('span');
 
@@ -938,25 +1023,10 @@ function handleLogin(e) {
     loader.style.display = 'block';
     btnText.style.opacity = '0';
 
-    // Simulate login
-    setTimeout(() => {
-        // Check credentials (demo)
-        const validCredentials = [
-            { email: 'officer@cfpip.gov.bd', password: 'password123' },
-            { email: 'admin@cfpip.gov.bd', password: 'admin456' }
-        ];
-
-        let isValid = (email, password) => {
-            return validCredentials.some(user =>
-                user.email === email && user.password === password
-            );
-        }
-
-        // const isValid = validCredentials.some(cred => 
-        //     cred.email === email && cred.password === password
-        // );
-
-        if (isValid) {
+    // Call API to login
+    const apiClient = new ApiClient();
+    apiClient.login(email, password)
+        .then(response => {
             // Save credentials if remember is checked
             try {
                 if (remember) {
@@ -964,8 +1034,14 @@ function handleLogin(e) {
                 } else {
                     localStorage.removeItem('rememberedEmail');
                 }
-            }
-            catch (e) {
+                // Persist auth token and user for dashboard population
+                if (response.token) {
+                    apiClient.setToken(response.token);
+                }
+                if (response.user) {
+                    localStorage.setItem('auth_user', JSON.stringify(response.user));
+                }
+            } catch (e) {
                 console.error('Error accessing localStorage:', e);
             }
 
@@ -975,17 +1051,20 @@ function handleLogin(e) {
             // Redirect after animation
             setTimeout(() => {
                 window.location.href = '/officer-dashboard';
-            }, 3000);
-        } else {
-            window.location.href = '/officer-dashboard';
-            // Show error modal
+            }, 2000);
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            
+            // Show error modal with actual error message
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = error.message || 'Invalid email or password. Please try again.';
             showModal('error-modal');
 
             loginBtn.disabled = false;
             loader.style.display = 'none';
             btnText.style.opacity = '';
-        }
-    }, 2000);
+        });
 }
 
 function loadRememberedCredentials() {

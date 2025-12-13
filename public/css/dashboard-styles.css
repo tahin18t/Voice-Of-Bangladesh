@@ -1337,7 +1337,7 @@
 
 .dashboard-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
 }
 
@@ -1350,6 +1350,11 @@
     flex-direction: column;
     transition: all 0.3s ease;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
 }
 
 .sidebar.collapsed {
@@ -1597,7 +1602,46 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-left: var(--sidebar-width);
+    min-width: 0;
+    height: 100vh;
+}
+
+/* Ensure sidebar stays fixed and main content sits to the right */
+.dashboard-container {
+    position: relative;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 900;
+}
+
+.main-content {
+    width: calc(100% - var(--sidebar-width));
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        left: -280px;
+    }
+
+    .sidebar.mobile-open {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+    }
 }
 
 /* Top Bar */

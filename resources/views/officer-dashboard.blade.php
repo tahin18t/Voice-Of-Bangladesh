@@ -66,19 +66,19 @@
                 </div>
                 <div class="officer-info">
                     <div class="officer-avatar">
-                        <img src="{{ asset('image/tahin.jpg') }}" alt="Tahin" class="avatar-img">
+                        <img src="{{ asset('image/tahin.jpg') }}" alt="Officer" class="avatar-img">
                         <div class="status-indicator online"></div>
                     </div>
                     <div class="officer-details">
-                        <h4 data-en="Shahriar Sakhawat Tahin" data-bn="শাহরিয়ার সাখাওয়াত তাহিন">Shahriar Sakhawat Tahin</h4>
-                        <p data-en="Senior Officer" data-bn="সিনিয়র কর্মকর্তা">Senior Officer</p>
-                        <small data-en="Roads & Highways Ministry" data-bn="সড়ক ও মহাসড়ক মন্ত্রণালয়">Roads & Highways Ministry</small>
+                        <h4 class="officer-name" data-en="" data-bn=""></h4>
+                        <p class="officer-role" data-en="" data-bn=""></p>
+                        <small class="officer-department" data-en="" data-bn=""></small>
                     </div>
                 </div>
+            </div>
                 <!-- <button class="sidebar-toggle" id="sidebar-toggle">
                     <i class="fas fa-bars"></i>
                 </button> -->
-            </div>
 
             <nav class="sidebar-nav">
                 <ul class="nav-menu">

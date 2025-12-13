@@ -539,22 +539,16 @@ class FeedbackFormSystem {
             // Show processing
             this.showProcessingModal();
             
-            // Check if user is authenticated
-            if (api && api.getToken()) {
-                // Send to API
-                const response = await api.createFeedback(formData);
-                
-                // Store tracking ID for success modal
-                this.lastTrackingId = response.data?.tracking_id || response.tracking_id || 'CFPIP-' + Date.now();
-                this.lastDepartment = response.data?.department || 'Government Department';
-                this.lastPriority = response.data?.priority || 'medium';
-            } else {
-                // For anonymous submissions, still send to API (backend will handle)
-                const response = await api.createFeedback(formData);
-                this.lastTrackingId = response.data?.tracking_id || response.tracking_id || 'CFPIP-' + Date.now();
-                this.lastDepartment = response.data?.department || 'Government Department';
-                this.lastPriority = response.data?.priority || 'medium';
-            }
+            // Create API client instance
+            const apiClient = new ApiClient();
+            
+            // Send to API
+            const response = await apiClient.createFeedback(formData);
+            
+            // Store tracking ID for success modal
+            this.lastTrackingId = response.data?.tracking_id || response.tracking_id || 'CFPIP-' + Date.now();
+            this.lastDepartment = response.data?.department || response.department || 'Government Department';
+            this.lastPriority = response.data?.priority || response.priority || 'medium';
             
             // Hide processing and show success
             this.hideProcessingModal();
@@ -644,20 +638,25 @@ class FeedbackFormSystem {
     }
 
     updateClassificationResults() {
-        // Use real data from API if available
+        // Determine final values from either API response or form fallback
+        let finalDepartment = null;
+        let finalPriority = null;
+        let finalUrgency = null;
+
         if (this.lastDepartment) {
-            document.getElementById('final-department').textContent = this.lastDepartment;
+            finalDepartment = this.lastDepartment;
         }
+
         if (this.lastPriority) {
-            document.getElementById('final-priority').textContent = this.lastPriority.charAt(0).toUpperCase() + this.lastPriority.slice(1);
-            document.getElementById('final-priority').className = `priority-badge ${this.lastPriority.toLowerCase()}`;
+            finalPriority = this.lastPriority.charAt(0).toUpperCase() + this.lastPriority.slice(1);
+            finalUrgency = this.lastPriority.toLowerCase();
         }
-        
+
         // Fallback to form data if API data not available
-        if (!this.lastDepartment) {
-            const category = document.getElementById('category').value;
-            
-            // Map category to department
+        if (!finalDepartment || !finalPriority) {
+            const categoryEl = document.getElementById('category');
+            const category = categoryEl ? categoryEl.value : null;
+
             const categoryDepartmentMap = {
                 roads: 'Roads & Highways Ministry',
                 water: 'Water Resources Ministry',
@@ -669,18 +668,26 @@ class FeedbackFormSystem {
                 transport: 'Road Transport Ministry',
                 electricity: 'Power Division'
             };
-            
-            const department = categoryDepartmentMap[category] || 'General Administration';
-            const urgency = document.querySelector('input[name="urgency"]:checked').value;
-            const priority = urgency.charAt(0).toUpperCase() + urgency.slice(1);
-            
-            document.getElementById('final-department').textContent = department;
-            document.getElementById('final-priority').textContent = priority;
-            document.getElementById('final-priority').className = `priority-badge ${urgency.toLowerCase()}`;
+
+            if (!finalDepartment) {
+                finalDepartment = categoryDepartmentMap[category] || 'General Administration';
+            }
+
+            if (!finalPriority) {
+                const urgencyEl = document.querySelector('input[name="urgency"]:checked');
+                finalUrgency = urgencyEl ? urgencyEl.value.toLowerCase() : 'medium';
+                finalPriority = finalUrgency.charAt(0).toUpperCase() + finalUrgency.slice(1);
+            }
         }
-        document.getElementById('final-department').textContent = department;
-        document.getElementById('final-priority').textContent = priority;
-        document.getElementById('final-priority').className = `priority-badge ${urgency}`;
+
+        // Apply to DOM
+        const deptEl = document.getElementById('final-department');
+        const prioEl = document.getElementById('final-priority');
+        if (deptEl) deptEl.textContent = finalDepartment;
+        if (prioEl) {
+            prioEl.textContent = finalPriority;
+            prioEl.className = `priority-badge ${finalUrgency}`;
+        }
     }
     
     /*  UTILITY FUNCTIONS */

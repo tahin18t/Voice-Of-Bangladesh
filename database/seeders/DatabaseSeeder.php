@@ -29,7 +29,9 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin123')
         ]);
 
-        // Run dummy users seeder (admin/officer)
-        $this->call(\Database\Seeders\DummyUsersSeeder::class);
+        // Run all seeders
+        $this->call(DummyUsersSeeder::class);
+        $this->call(DummyFeedbackSeeder::class);
+        $this->call(DummyAssignmentSeeder::class);
     }
 }
