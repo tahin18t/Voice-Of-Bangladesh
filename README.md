@@ -2,6 +2,8 @@
 
 Voice of Bangladesh is an innovative digital governance initiative designed to bridge the communication gap between citizens and the Government of Bangladesh. This platform provides a transparent and efficient way for citizens to express their feedback, complaints, and suggestions while enabling government departments to respond intelligently through automated routing, categorization, and analysis powered by artificial intelligence. 
 The system supports bilingual interaction (Bangla and English), mobile responsiveness, and advanced analytics to derive policy insights. By empowering both citizens and government officers with a unified digital interface, Voice of Bangladesh aims to enhance accountability, responsiveness, and citizen satisfaction while supporting the broader vision of a Smart and Digital Bangladesh.
+
+
 Task Distribution:
 | Name | ID | Task |
 |----------------------------|------------------|---------|
@@ -32,45 +34,30 @@ Task Distribution:
 - Git
 
 ### Step-by-Step Setup
-
-```bash
+Step-by-Step Setup
 # 1. Clone the repository
-git clone https://github.com/tahin18t/Voice-Of-Bangladesh.git
-cd Voice-Of-Bangladesh
-
+git clone https:https://github.com/tahin18t/Voice-Of-Bangladesh.git
 # 2. Install PHP dependencies
 composer install
-
 # 3. Install frontend assets
 npm install && npm run build
-
 # 4. Copy the environment file
 cp .env.example .env
-
 # 5. Generate application key
 php artisan key:generate
-
 # 6. Configure the database in .env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=voice_of_bangladesh
+DB_DATABASE=hims_db
 DB_USERNAME=root
 DB_PASSWORD=
-
 # 7. Run migrations & seed initial data
 php artisan migrate --seed
-
 # 8. (Optional) Create a symbolic link for storage
 php artisan storage:link
-
 # 9. Start the development server
 php artisan serve
-```
-
-The application will be available at `http://localhost:8000`
-
----
 
 ## Project Output Overview
 
