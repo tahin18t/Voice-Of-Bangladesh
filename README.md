@@ -46,12 +46,14 @@ cp .env.example .env
 # 5. Generate application key
 php artisan key:generate
 # 6. Configure the database in .env
+
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=hims_db
 DB_USERNAME=root
 DB_PASSWORD=
+
 # 7. Run migrations & seed initial data
 php artisan migrate --seed
 # 8. (Optional) Create a symbolic link for storage
