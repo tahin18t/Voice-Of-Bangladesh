@@ -36,15 +36,15 @@ Task Distribution:
 ### Step-by-Step Setup
 Step-by-Step Setup
 # 1. Clone the repository
-git clone https:https://github.com/tahin18t/Voice-Of-Bangladesh.git
+Git clone https:https://github.com/tahin18t/Voice-Of-Bangladesh.git
 # 2. Install PHP dependencies
-composer install
+Composer install
 # 3. Install frontend assets
 npm install && npm run build
 # 4. Copy the environment file
 cp .env.example .env
 # 5. Generate application key
-php artisan key:generate
+php artisan key: generate
 # 6. Configure the database in .env
 
 DB_CONNECTION=mysql
@@ -57,7 +57,7 @@ DB_PASSWORD=
 # 7. Run migrations & seed initial data
 php artisan migrate --seed
 # 8. (Optional) Create a symbolic link for storage
-php artisan storage:link
+php artisan storage: link
 # 9. Start the development server
 php artisan serve
 
