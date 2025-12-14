@@ -166,8 +166,12 @@ Thank you for your patience, understanding, and moral support throughout the dev
 
 ### Home Page
 <img width="1261" height="876" alt="Screenshot 2025-12-06 201706" src="https://github.com/user-attachments/assets/1af64123-87cb-4f40-bf31-661e99cbd83a" />
+
 ### AI Integration in home page
 <img width="1436" height="879" alt="Screenshot 2025-12-06 201724" src="https://github.com/user-attachments/assets/fa0e8dac-0a06-4b59-92b5-95f52cf1d3da" />
+
+### Live Gov't Dashboard
+<img width="1244" height="885" alt="Screenshot 2025-12-06 201739" src="https://github.com/user-attachments/assets/ad17cf86-fde4-4787-bc6a-976ea7e818d3" />
 
 ### Login Page
 ![Home Page](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
