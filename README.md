@@ -196,3 +196,7 @@ Thank you for your patience, understanding, and moral support throughout the dev
 ![Bengali Language Support](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/806a24976a2f1bda14eea148136a22d7b4e00ccb/UI%20(10).png)
 #Database
 <img width="1280" height="610" alt="image" src="https://github.com/user-attachments/assets/162cbaa9-f1a4-4dc1-b524-60d9f9868baa" />
+<img width="1280" height="483" alt="image" src="https://github.com/user-attachments/assets/0a934b02-ea08-4f71-be56-49d5d39e2392" />
+<img width="1280" height="539" alt="image" src="https://github.com/user-attachments/assets/92f597fc-c4b8-4cbd-b442-76806b9708cf" />
+
+
