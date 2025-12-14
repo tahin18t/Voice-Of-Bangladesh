@@ -1,6 +1,6 @@
 # Voice of Bangladesh
 
-Voice of Bangladesh is an innovative digital governance initiative designed to bridge the communication gap between citizens and the Government of Bangladesh. This platform provides a transparent and efficient way for citizens to express their feedback, complaints, and suggestions while enabling government departments to respond intelligently through automated routing, categorization, and analysis powered by artificial intelligence. 
+Voice of Bangladesh is an innovative digital governance initiative designed to bridge the communication gap between citizens and the Government of Bangladesh. This platform provides a transparent and efficient way for citizens to express their feedback, complaints, and suggestions while enabling government departments to respond intelligently through automated routing, categorization, and analysis powered by artificial intelligence.
 The system supports bilingual interaction (Bangla and English), mobile responsiveness, and advanced analytics to derive policy insights. By empowering both citizens and government officers with a unified digital interface, Voice of Bangladesh aims to enhance accountability, responsiveness, and citizen satisfaction while supporting the broader vision of a Smart and Digital Bangladesh.
 
 Task Distribution:
