@@ -164,6 +164,8 @@ Thank you for your patience, understanding, and moral support throughout the dev
 
 
 
+### Home Page
+<img width="1261" height="876" alt="Screenshot 2025-12-06 201706" src="https://github.com/user-attachments/assets/1af64123-87cb-4f40-bf31-661e99cbd83a" />
 
 ### Home Page
 ![Home Page](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
