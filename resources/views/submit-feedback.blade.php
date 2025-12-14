@@ -67,15 +67,15 @@
 
             <!-- Navigation Menu -->
             <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">
+                <a href="{{ url('/index') }}" class="nav-link">
                     <i class="fas fa-home"></i>
                     <span data-en="Home" data-bn="হোম">Home</span>
                 </a>
-                <a href="feedback.html" class="nav-link active">
+                <a href="{{ url('/feedback') }}" class="nav-link active">
                     <i class="fas fa-comment-dots"></i>
                     <span data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</span>
                 </a>
-                <a href="track.html" class="nav-link">
+                <a href="{{ url('/track') }}" class="nav-link">
                     <i class="fas fa-search-location"></i>
                     <span data-en="Track Progress" data-bn="অগ্রগতি দেখুন">Track Progress</span>
                 </a>
@@ -87,7 +87,7 @@
                     <span class="flag-icon">🇧🇩</span>
                     <span class="lang-text" id="lang-display">বাংলা</span>
                 </button>
-                <a href="login.html" class="officer-login">
+                <a href="{{ url('/login') }}" class="officer-login">
                     <i class="fas fa-shield-alt"></i>
                     <span data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</span>
                 </a>
@@ -107,7 +107,7 @@
             <div class="container">
                 <div class="header-content" data-aos="fade-up">
                     <div class="breadcrumb">
-                        <a href="index.html" data-en="Home" data-bn="হোম">Home</a>
+                        <a href="{{ url('/index') }}" data-en="Home" data-bn="হোম">Home</a>
                         <i class="fas fa-chevron-right"></i>
                         <span data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</span>
                     </div>
@@ -511,7 +511,7 @@
                     </div>
                 </div>
                 <div class="modal-actions">
-                    <a href="track-status.html" class="btn btn-primary">
+                    <a href="{{ url('/track') }}" class="btn btn-primary">
                         <i class="fas fa-search"></i>
                         <span data-en="Track Status" data-bn="স্ট্যাটাস ট্র্যাক করুন">Track Status</span>
                     </a>
@@ -540,10 +540,10 @@
                 <div class="footer-section">
                     <h3 data-en="Quick Links" data-bn="দ্রুত লিংক">Quick Links</h3>
                     <ul>
-                        <li><a href="index.html" data-en="Home" data-bn="হোম">Home</a></li>
-                        <li><a href="track-status.html" data-en="Track Status" data-bn="স্ট্যাটাস ট্র্যাক করুন">Track Status</a></li>
-                        <li><a href="public-insights.html" data-en="Public Insights" data-bn="জনগণের অন্তর্দৃষ্টি">Public Insights</a></li>
-                        <li><a href="officer-login.html" data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</a></li>
+                        <li><a href="{{ url('/index') }}" data-en="Home" data-bn="হোম">Home</a></li>
+                        <li><a href="{{ url('/track') }}" data-en="Track Status" data-bn="স্ট্যাটাস ট্র্যাক করুন">Track Status</a></li>
+                        <li><a href="{{ url('/public-insights') }}" data-en="Public Insights" data-bn="জনগণের অন্তর্দৃষ্টি">Public Insights</a></li>
+                        <li><a href="{{ url('/login') }}" data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</a></li>
                     </ul>
                 </div>
 
@@ -565,6 +565,7 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ asset('js/api.js') }}"></script>
     <script src="{{ asset('js/submit-feedback.js') }}"></script>
     <script src="{{ asset('js/feedback-app.js') }}"></script>
 

@@ -1,7 +1,7 @@
 // Executive Intelligence Dashboard Application
 class ExecutiveDashboard {
     constructor() {
-        this.currentLanguage = 'en';
+        this.currentLanguage = 'bn';
         this.charts = {};
         this.realTimeData = {
             activeUsers: 47832,
@@ -14,7 +14,7 @@ class ExecutiveDashboard {
             responseTime: 1.8,
             securityScore: 99.7
         };
-        
+
         this.init();
     }
 
@@ -26,7 +26,7 @@ class ExecutiveDashboard {
         this.animateKPIValues();
         this.updateTimeZones();
         this.updateLanguage();
-        
+
         console.log('👑 Executive Intelligence Dashboard initialized successfully');
     }
 
@@ -35,42 +35,42 @@ class ExecutiveDashboard {
         const progressCircle = document.querySelector('.progress-circle');
         const progressPercentage = document.querySelector('.progress-percentage');
         const loadingStatus = document.querySelector('.loading-status');
-        
+
         const loadingSteps = [
-            { 
-                text: { 
-                    en: 'Analyzing national policy trends...', 
-                    bn: 'জাতীয় নীতিগত প্রবণতা বিশ্লেষণ করা হচ্ছে...' 
-                }, 
-                progress: 20 
+            {
+                text: {
+                    en: 'Analyzing national policy trends...',
+                    bn: 'জাতীয় নীতিগত প্রবণতা বিশ্লেষণ করা হচ্ছে...'
+                },
+                progress: 20
             },
-            { 
-                text: { 
-                    en: 'Loading AI policy intelligence...', 
-                    bn: 'AI নীতি বুদ্ধিমত্তা লোড হচ্ছে...' 
-                }, 
-                progress: 40 
+            {
+                text: {
+                    en: 'Loading AI policy intelligence...',
+                    bn: 'AI নীতি বুদ্ধিমত্তা লোড হচ্ছে...'
+                },
+                progress: 40
             },
-            { 
-                text: { 
-                    en: 'Connecting to ministry databases...', 
-                    bn: 'মন্ত্রণালয় ডেটাবেসে সংযোগ হচ্ছে...' 
-                }, 
-                progress: 60 
+            {
+                text: {
+                    en: 'Connecting to ministry databases...',
+                    bn: 'মন্ত্রণালয় ডেটাবেসে সংযোগ হচ্ছে...'
+                },
+                progress: 60
             },
-            { 
-                text: { 
-                    en: 'Generating strategic insights...', 
-                    bn: 'কৌশলগত অন্তর্দৃষ্টি তৈরি হচ্ছে...' 
-                }, 
-                progress: 80 
+            {
+                text: {
+                    en: 'Generating strategic insights...',
+                    bn: 'কৌশলগত অন্তর্দৃষ্টি তৈরি হচ্ছে...'
+                },
+                progress: 80
             },
-            { 
-                text: { 
-                    en: 'Executive dashboard ready!', 
-                    bn: 'নির্বাহী ড্যাশবোর্ড প্রস্তুত!' 
-                }, 
-                progress: 100 
+            {
+                text: {
+                    en: 'Executive dashboard ready!',
+                    bn: 'নির্বাহী ড্যাশবোর্ড প্রস্তুত!'
+                },
+                progress: 100
             }
         ];
 
@@ -78,23 +78,32 @@ class ExecutiveDashboard {
         const stepInterval = setInterval(() => {
             if (currentStep < loadingSteps.length) {
                 const step = loadingSteps[currentStep];
-                
+
                 // Update text
-                loadingStatus.textContent = step.text[this.currentLanguage];
-                loadingStatus.setAttribute('data-en', step.text.en);
-                loadingStatus.setAttribute('data-bn', step.text.bn);
-                
+                if (loadingStatus) {
+                    loadingStatus.textContent = step.text[this.currentLanguage];
+                    loadingStatus.setAttribute('data-en', step.text.en);
+                    loadingStatus.setAttribute('data-bn', step.text.bn);
+                }
+
                 // Update progress ring and percentage
-                const circumference = 2 * Math.PI * 50;
-                const offset = circumference - (step.progress / 100) * circumference;
-                progressCircle.style.strokeDashoffset = offset;
-                progressPercentage.textContent = `${step.progress}%`;
-                
+                if (progressCircle) {
+                    const circumference = 2 * Math.PI * 50;
+                    const offset = circumference - (step.progress / 100) * circumference;
+                    progressCircle.style.strokeDashoffset = offset;
+                }
+
+                if (progressPercentage) {
+                    progressPercentage.textContent = `${step.progress}%`;
+                }
+
                 currentStep++;
             } else {
                 clearInterval(stepInterval);
                 setTimeout(() => {
-                    loader.classList.add('hidden');
+                    if (loader) {
+                        loader.classList.add('hidden');
+                    }
                     document.body.style.overflow = 'auto';
                 }, 800);
             }
@@ -266,14 +275,14 @@ class ExecutiveDashboard {
                     const ctx = chart.ctx;
                     const centerX = chart.getDatasetMeta(0).data[0].x;
                     const centerY = chart.getDatasetMeta(0).data[0].y;
-                    
+
                     ctx.save();
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.font = 'bold 24px Inter';
                     ctx.fillStyle = '#2d3748';
                     ctx.fillText('92.4%', centerX, centerY - 10);
-                    
+
                     ctx.font = '12px Inter';
                     ctx.fillStyle = '#718096';
                     ctx.fillText('Satisfaction', centerX, centerY + 12);
@@ -287,7 +296,7 @@ class ExecutiveDashboard {
         if (!this.charts.transformation) return;
 
         let labels, data1, data2, data3;
-        
+
         switch (timeframe) {
             case '1y':
                 labels = ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'];
@@ -320,28 +329,28 @@ class ExecutiveDashboard {
 
     animateKPIValues() {
         const kpiElements = document.querySelectorAll('.kpi-value[data-count]');
-        
+
         kpiElements.forEach(element => {
             const targetValue = parseFloat(element.getAttribute('data-count'));
             let currentValue = 0;
             const increment = targetValue / 80; // Slower animation for executive feel
             const isPercentage = element.textContent.includes('%') || element.getAttribute('data-count').includes('%');
             const isDecimal = targetValue % 1 !== 0;
-            
+
             const animation = setInterval(() => {
                 currentValue += increment;
                 if (currentValue >= targetValue) {
                     currentValue = targetValue;
                     clearInterval(animation);
                 }
-                
+
                 let displayValue;
                 if (isDecimal) {
                     displayValue = currentValue.toFixed(1);
                 } else {
                     displayValue = Math.round(currentValue);
                 }
-                
+
                 if (element.textContent.includes('M')) {
                     element.textContent = displayValue + 'M';
                 } else if (isPercentage || element.textContent.includes('%')) {
@@ -355,14 +364,14 @@ class ExecutiveDashboard {
 
     updateTimeZones() {
         const now = new Date();
-        
+
         // Dhaka Time (UTC+6)
         const dhakaTime = new Date(now.getTime() + (6 * 60 * 60 * 1000));
         const dhakaTimeElement = document.getElementById('dhaka-time');
         if (dhakaTimeElement) {
             dhakaTimeElement.textContent = this.formatTime(dhakaTime);
         }
-        
+
         // UTC Time
         const utcTimeElement = document.getElementById('utc-time');
         if (utcTimeElement) {
@@ -377,7 +386,7 @@ class ExecutiveDashboard {
             second: '2-digit',
             hour12: false
         };
-        
+
         if (isUTC) {
             return date.toUTCString().split(' ')[4];
         } else {
@@ -406,7 +415,7 @@ class ExecutiveDashboard {
         const dbLoadElement = document.querySelector('.monitor-item:nth-child(3) .monitor-value');
         if (dbLoadElement) {
             dbLoadElement.textContent = this.realTimeData.databaseLoad + '%';
-            
+
             // Update warning status
             const dbItem = document.querySelector('.monitor-item:nth-child(3)');
             const dbStatus = document.querySelector('.monitor-item:nth-child(3) .monitor-status');
@@ -455,7 +464,7 @@ class ExecutiveDashboard {
 
         // Update document language
         document.documentElement.lang = this.currentLanguage;
-        
+
         console.log(`🌐 Executive Dashboard language changed to: ${this.currentLanguage}`);
     }
 
@@ -825,7 +834,7 @@ const executiveNotificationStyles = `
         min-width: auto;
         max-width: none;
     }
-    
+
     @keyframes slideInFromRight {
         from {
             transform: translateY(-100%);
@@ -836,7 +845,7 @@ const executiveNotificationStyles = `
             opacity: 1;
         }
     }
-    
+
     @keyframes fadeOutToRight {
         from {
             transform: translateY(0);
@@ -858,7 +867,7 @@ function navigateTo(section) {
     // Update active button in sidebar
     const navButtons = document.querySelectorAll('.nav-btn');
     navButtons.forEach(btn => btn.classList.remove('active'));
-    
+
     const activeBtn = document.querySelector(`[onclick="navigateTo('${section}')"]`);
     if (activeBtn) {
         activeBtn.classList.add('active');
@@ -873,7 +882,7 @@ function navigateTo(section) {
             break;
         case 'feedback':
             // Navigate to feedback page
-            window.location.href = 'submit-feedback.html';
+            window.location.href = "{{ url('/submit-feedback') }}";
             break;
         case 'governance':
             // Navigate to intelligent governance section

@@ -3,29 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Officer Dashboard - AI-Powered Governance | CFPIP Bangladesh</title>
     <meta name="description" content="Advanced officer dashboard with AI-powered insights, workflow management, and real-time analytics for government officials.">
-    
+
     <!-- Government Portal Meta Tags -->
     <meta name="keywords" content="Officer Dashboard, AI Analytics, Government Workflow, Bangladesh Ministry, Policy Intelligence">
     <meta name="author" content="Government of Bangladesh">
     <meta property="og:title" content="AI-Powered Officer Dashboard | CFPIP">
     <meta property="og:description" content="Enterprise-grade dashboard for government officers with AI insights and workflow management.">
-    
+
     <!-- Government Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    
+
     <!-- Charts and Data Visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
-    
+
     <link rel="stylesheet" href="{{ asset('css/modern-styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard-styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/executive-styles.css') }}">
@@ -66,7 +67,7 @@
                 </div>
                 <div class="officer-info">
                     <div class="officer-avatar">
-                        <img src="./image/hero2.JPG" alt="Tahin" class="avatar-img">
+                        <img src="{{ asset('image/tahin.jpg') }}" alt="Tahin" class="avatar-img">
                         <div class="status-indicator online"></div>
                     </div>
                     <div class="officer-details">
@@ -75,9 +76,9 @@
                         <small data-en="Roads & Highways Ministry" data-bn="সড়ক ও মহাসড়ক মন্ত্রণালয়">Roads & Highways Ministry</small>
                     </div>
                 </div>
-                <button class="sidebar-toggle" id="sidebar-toggle">
+                <!-- <button class="sidebar-toggle" id="sidebar-toggle">
                     <i class="fas fa-bars"></i>
-                </button>
+                </button> -->
             </div>
 
             <nav class="sidebar-nav">
@@ -92,7 +93,7 @@
                     <li class="nav-item">
                         <a href="#feedbacks" class="nav-link" onclick="showDashboardSection('feedbacks')">
                             <i class="fas fa-comments"></i>
-                            <span data-en="My Feedbacks" data-bn="আমার মতামত">My Feedbacks</span>
+                            <span data-en="All Feedbacks" data-bn="সমস্ত মতামত">All Feedbacks</span>
                             <div class="notification-badge">12</div>
                             <div class="nav-indicator"></div>
                         </a>
@@ -101,6 +102,14 @@
                         <a href="#governance" class="nav-link" onclick="showDashboardSection('governance')">
                             <i class="fas fa-brain"></i>
                             <span data-en="Intelligent Governance" data-bn="বুদ্ধিমান শাসন">Intelligent Governance</span>
+                            <div class="nav-indicator"></div>
+                        </a>
+                    </li>
+                    <!-- Admin Only Section -->
+                    <li class="nav-item admin-only" style="display: none;">
+                        <a href="#users" class="nav-link" onclick="showDashboardSection('users')">
+                            <i class="fas fa-users-cog"></i>
+                            <span data-en="Users Management" data-bn="ব্যবহারকারী ব্যবস্থাপনা">Users Management</span>
                             <div class="nav-indicator"></div>
                         </a>
                     </li>
@@ -123,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <button class="logout-btn" onclick="logout()">
                         <i class="fas fa-sign-out-alt"></i>
                         <span data-en="Logout" data-bn="লগআউট">Logout</span>
@@ -190,21 +199,19 @@
                         </div>
                     </div>
 
-                    <!-- Language Toggle -->
-                    <button class="lang-switch" onclick="toggleLanguage()">
-                        <span class="flag-icon">🇧🇩</span>
-                        <span class="lang-text" id="lang-display">বাংলা</span>
-                    </button>
-
                     <!-- Quick Actions -->
-                    <div class="quick-actions">
+                    <!-- <div class="quick-actions"> -->
+                        <button class="lang-switch" onclick="toggleLanguage()">
+                            <span class="flag-icon">🇧🇩</span>
+                            <span class="lang-text" id="lang-display">বাংলা</span>
+                        </button>
                         <button class="quick-action-btn" onclick="generateReport()" data-en="Generate Report" data-bn="রিপোর্ট তৈরি করুন">
                             <i class="fas fa-file-export"></i>
                         </button>
                         <button class="quick-action-btn" onclick="refreshData()" data-en="Refresh Data" data-bn="ডেটা রিফ্রেশ করুন">
                             <i class="fas fa-sync-alt"></i>
                         </button>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </header>
 
@@ -316,7 +323,7 @@
                                     </button>
                                 </div>
                             </div>
-                            
+
                             <div class="ai-insights-grid">
                                 <div class="ai-insight-card priority-high">
                                     <div class="insight-header">
@@ -355,7 +362,7 @@
                                 <div class="ai-insight-card priority-low">
                                     <div class="insight-header">
                                         <div class="insight-icon">
-                                            <i class="fas fa-chart-trend-up"></i>
+                                            <i class="fas fa-chart-line"></i>
                                         </div>
                                         <div class="insight-priority">TREND ANALYSIS</div>
                                     </div>
@@ -408,7 +415,7 @@
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
-                        
+
                         <div class="activity-timeline">
                             <div class="activity-item">
                                 <div class="activity-icon">
@@ -485,7 +492,7 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <div class="bulk-actions">
                                 <input type="checkbox" id="select-all" onchange="selectAllFeedbacks()">
                                 <button class="bulk-action-btn" onclick="bulkAssign()">
@@ -1028,6 +1035,7 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="{{ asset('js/api.js') }}"></script>
     <script src="{{ asset('js/modern-app.js') }}"></script>
     <script src="{{ asset('js/dashboard-app.js') }}"></script>
     <script src="{{ asset('js/executive-app.js') }}"></script>
