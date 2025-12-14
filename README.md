@@ -188,6 +188,10 @@ Thank you for your patience, understanding, and moral support throughout the dev
 ### Contact information
 ![photo_2025-12-15 04 42 19](https://github.com/user-attachments/assets/0114f9d7-3a86-4b0a-8798-98283c57ff63)
 
+### Feedback With AI Assistant
+![photo_2025-12-15 04 40 20](https://github.com/user-attachments/assets/95ea2eb0-4333-411c-bb21-4c204716edcb)
+
+
 
 ### Login Page
 ![Home Page](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
