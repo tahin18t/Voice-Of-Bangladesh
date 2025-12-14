@@ -71,13 +71,9 @@ php artisan serve
 Fully responsive and bilingual (Bangla & English) web portal.
 
 Allows citizens to submit:
-
   Complaints
-
   Suggestions
-
   Feedback
-
   Attachments
 
 Captures detailed information: category, region, description, and files.
