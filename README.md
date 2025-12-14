@@ -161,7 +161,8 @@ Thank you for your patience, understanding, and moral support throughout the dev
 ---
 
 ## UI Screenshots
-![image alt](https://github.com/tahin18t/Voice-OfBangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
+
+
 
 
 ### Home Page
@@ -193,3 +194,5 @@ Thank you for your patience, understanding, and moral support throughout the dev
 
 ### Bilingual Support
 ![Bengali Language Support](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/806a24976a2f1bda14eea148136a22d7b4e00ccb/UI%20(10).png)
+#Database
+<img width="1280" height="610" alt="image" src="https://github.com/user-attachments/assets/162cbaa9-f1a4-4dc1-b524-60d9f9868baa" />
