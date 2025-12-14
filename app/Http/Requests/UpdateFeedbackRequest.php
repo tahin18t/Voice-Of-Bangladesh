@@ -17,11 +17,13 @@ class UpdateFeedbackRequest extends FormRequest
             'title' => 'sometimes|required|string|max:255',
             'description' => 'nullable|string',
             'category' => 'nullable|string|max:100',
-            'priority' => 'nullable|in:low,medium,high',
-            'status' => 'nullable|in:pending,in-progress,resolved,closed',
+            'priority' => 'nullable|in:low,medium,high,critical',
+            'status' => 'nullable|in:pending,assigned,in_progress,resolved,closed',
             'location' => 'nullable|string|max:255',
             'attachments' => 'nullable|array',
-            'attachments.*' => 'nullable|string',
+            'attachments.*' => 'nullable|file|max:2048',
+            'files' => 'nullable|array',
+            'files.*' => 'nullable|file|max:2048',
         ];
     }
 }

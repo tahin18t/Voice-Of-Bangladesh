@@ -11,10 +11,13 @@ Route::prefix('v1')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-    // Protect API routes with Sanctum
+    // Public citizen endpoints (no auth)
+    Route::post('feedbacks', [FeedbackController::class, 'store']);
+    Route::get('feedbacks/track/{trackingId}', [FeedbackController::class, 'track']);
+
+    // Protect officer/admin API routes with Sanctum
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('feedbacks', [FeedbackController::class, 'index']);
-        Route::post('feedbacks', [FeedbackController::class, 'store']);
         Route::get('feedbacks/{id}', [FeedbackController::class, 'show']);
         Route::put('feedbacks/{id}', [FeedbackController::class, 'update']);
         Route::post('feedbacks/{id}/assign', [FeedbackController::class, 'assign']);

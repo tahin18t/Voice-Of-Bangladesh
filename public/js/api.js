@@ -5,7 +5,14 @@
 
 class ApiClient {
     constructor() {
-        this.baseURL = '/api/v1';
+        const metaBase = typeof document !== 'undefined'
+            ? document.querySelector('meta[name="api-base-url"]')
+            : null;
+        const normalizedBase = metaBase && metaBase.content
+            ? metaBase.content.replace(/\/+$/, '')
+            : `${window.location.origin}/api/v1`;
+
+        this.baseURL = normalizedBase;
         this.token = this.getToken();
     }
 
@@ -37,13 +44,22 @@ class ApiClient {
 
     async request(method, endpoint, data = null, includeAuth = true) {
         const url = `${this.baseURL}${endpoint}`;
+        const headers = this.getHeaders(includeAuth);
         const options = {
             method,
-            headers: this.getHeaders(includeAuth),
+            headers,
         };
 
+        // Support FormData (file uploads). If data is FormData, let the
+        // browser set the Content-Type (including multipart boundary).
         if (data && (method === 'POST' || method === 'PUT')) {
-            options.body = JSON.stringify(data);
+            if (typeof FormData !== 'undefined' && data instanceof FormData) {
+                // remove manual content-type so browser can set boundary
+                if (headers['Content-Type']) delete headers['Content-Type'];
+                options.body = data;
+            } else {
+                options.body = JSON.stringify(data);
+            }
         }
 
         try {
@@ -92,6 +108,10 @@ class ApiClient {
     async getFeedbacks(filters = {}) {
         const params = new URLSearchParams(filters);
         return this.request('GET', `/feedbacks?${params}`);
+    }
+
+    async getFeedbackByTracking(trackingId) {
+        return this.request('GET', `/feedbacks/track/${encodeURIComponent(trackingId)}`, null, false);
     }
 
     async getFeedback(id) {

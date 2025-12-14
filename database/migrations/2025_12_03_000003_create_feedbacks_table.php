@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('category')->nullable();
-            $table->enum('priority', ['low','medium','high'])->default('low');
-            $table->enum('status', ['pending','in-progress','resolved','closed'])->default('pending');
+            $table->enum('priority', ['low','medium','high','critical'])->default('low');
+            $table->enum('status', ['pending','assigned','in_progress','resolved','closed'])->default('pending');
             $table->string('location')->nullable();
             $table->json('attachments')->nullable();
             $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();

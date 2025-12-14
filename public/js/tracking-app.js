@@ -202,6 +202,20 @@ function getRelativeTime(dateString) {
     return 'Just now';
 }
 
+function mapStatusToProgress(status) {
+    switch (status) {
+        case 'resolved':
+        case 'closed':
+            return 100;
+        case 'in_progress':
+            return 65;
+        case 'assigned':
+            return 40;
+        default:
+            return 15;
+    }
+}
+
 function animateCounter(element, start, end, duration = 1000) {
     const range = end - start;
     const increment = range / (duration / 16);
@@ -382,16 +396,48 @@ function handleSearch() {
     showLoader();
     hideSearchSuggestions();
     
-    // Simulate API call
-    setTimeout(() => {
-        if (sampleCases[trackingId]) {
-            currentTrackingId = trackingId;
-            currentCase = sampleCases[trackingId];
-            loadCaseData(trackingId);
-        } else {
-            showCaseNotFound(trackingId);
+    // Call real API endpoint instead of mock data
+    (async () => {
+        try {
+            // Replace mock timeout with real API call
+            const response = await fetch(`/api/v1/feedbacks/track/${encodeURIComponent(trackingId)}`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            const feedback = data.data || null;
+            
+            if (feedback) {
+                currentTrackingId = trackingId;
+                currentCase = {
+                    id: feedback.tracking_id,
+                    title: feedback.title,
+                    description: feedback.description,
+                    status: feedback.status || 'pending',
+                    category: feedback.category,
+                    priority: feedback.priority || 'medium',
+                    location: feedback.location,
+                    created_at: feedback.created_at,
+                    submittedDate: feedback.created_at,
+                    lastUpdated: feedback.updated_at || feedback.created_at,
+                    assignedOfficer: feedback.assignee?.name || 'Not assigned',
+                    department: feedback.assignee?.department || 'Unassigned',
+                    estimatedCompletion: feedback.estimated_completion || feedback.created_at,
+                    progressPercentage: mapStatusToProgress(feedback.status),
+                    assigned_to: feedback.assigned_to,
+                    ai_insight: feedback.ai_insight
+                };
+                loadCaseData(trackingId);
+            } else {
+                showCaseNotFound(trackingId);
+            }
+        } catch (error) {
+            console.error('Error fetching feedback:', error);
+            showNotification('Error', 'Failed to fetch feedback data. Please try again.', 'error');
         }
-    }, 2000);
+    })();
 }
 
 // Case data loading

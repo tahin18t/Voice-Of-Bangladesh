@@ -250,7 +250,44 @@ class ModernGovernmentPortal {
        ========================================================================= */
     
     setupStatsCounters() {
-        this.observeStatsSection();
+        // Populate stat counters from the API when possible, then observe for
+        // intersection to animate. This replaces hardcoded values so empty
+        // databases will show 0 instead of default large numbers.
+        (async () => {
+            try {
+                const apiClient = new ApiClient();
+                // request many items so we can compute derived metrics locally
+                const resp = await apiClient.getFeedbacks({ per_page: 1000 });
+                const data = resp.data || [];
+
+                const total = resp.total || data.length || 0;
+                const resolved = data.filter(f => (f.status || '').toLowerCase() === 'resolved').length;
+                const aiToday = data.filter(f => f.ai_insight && f.ai_insight.created_at && (new Date(f.ai_insight.created_at)).toDateString() === (new Date()).toDateString()).length;
+
+                // Update DOM elements which use data-count
+                const statNodes = document.querySelectorAll('.live-stats .stat-item');
+                statNodes.forEach(node => {
+                    const label = (node.querySelector('.stat-label') || {}).textContent || '';
+                    const numberEl = node.querySelector('.stat-number');
+                    if (!numberEl) return;
+
+                    if (label.toLowerCase().includes('active')) {
+                        numberEl.dataset.count = total;
+                    } else if (label.toLowerCase().includes('resolution')) {
+                        numberEl.dataset.count = total === 0 ? 0 : Math.round((resolved / total) * 100);
+                        // Keep percent sign in initial content
+                        numberEl.textContent = '0%';
+                    } else if (label.toLowerCase().includes('ai insights')) {
+                        numberEl.dataset.count = aiToday;
+                    }
+                });
+            } catch (e) {
+                // ignore — we'll animate existing hardcoded counts as fallback
+                console.warn('Could not load stats from API:', e.message || e);
+            } finally {
+                this.observeStatsSection();
+            }
+        })();
     }
     
     observeStatsSection() {

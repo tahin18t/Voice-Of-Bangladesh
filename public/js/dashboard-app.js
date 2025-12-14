@@ -47,7 +47,10 @@ class DashboardApp {
                 clearInterval(stepInterval);
                 setTimeout(() => {
                     loader.classList.add('hidden');
-                    document.body.classList.remove('no-scroll');
+                    // document.body.classList.remove('no-scroll');
+                    document.body.classList.remove('loading');
+                    document.body.style.overflow = 'auto';
+
                 }, 500);
             }
         }, 600);
@@ -70,6 +73,31 @@ class DashboardApp {
                 sidebar.classList.toggle('mobile-open');
             });
         }
+
+        // Close collapsed sidebar when clicking anywhere outside its buttons/links
+        document.addEventListener('click', (e) => {
+            if (!sidebar) return;
+            const clickedInsideSidebar = sidebar.contains(e.target);
+            const clickedToggle = sidebarToggle && sidebarToggle.contains(e.target);
+            const clickedMobileToggle = mobileSidebarToggle && mobileSidebarToggle.contains(e.target);
+
+            // On desktop: if collapsed and click outside, expand
+            if (!clickedInsideSidebar && !clickedToggle && !clickedMobileToggle) {
+                if (sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.remove('collapsed');
+                    // Adjust main content width on expand
+                    const mainContent = document.querySelector('.main-content');
+                    if (mainContent) {
+                        mainContent.style.marginLeft = '';
+                        mainContent.style.width = '';
+                    }
+                }
+                // On mobile: if open and clicked outside, close
+                if (sidebar.classList.contains('mobile-open')) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            }
+        });
 
         // Close sidebar on mobile when clicking outside
         document.addEventListener('click', (e) => {
@@ -196,20 +224,58 @@ class DashboardApp {
 
     async loadDashboardData() {
         try {
-            // Fetch feedbacks from API
-            if (api && api.getToken()) {
-                const response = await api.getFeedbacks({ status: 'all', per_page: 10 });
+            // Create API client instance
+            const apiClient = new ApiClient();
+
+            // Load current user from localStorage
+            this.currentUser = null;
+            try {
+                const raw = localStorage.getItem('auth_user');
+                if (raw) this.currentUser = JSON.parse(raw);
+            } catch (e) {
+                console.warn('Failed to parse auth_user:', e);
+            }
+            this.populateUserHeader();
+            
+            // Check if user is authenticated
+            if (apiClient.getToken()) {
+                const response = await apiClient.getFeedbacks({ per_page: 10 });
                 this.feedbackData = response.data || [];
             } else {
-                // Fallback to mock data if not authenticated
-                this.feedbackData = [];
+                // Redirect to login if not authenticated
+                window.location.href = '/login';
+                return;
             }
         } catch (error) {
             console.error('Error loading dashboard data:', error);
             this.feedbackData = [];
         }
 
-        this.populateFeedbacksTable();
+            this.populateFeedbacksTable();
+    }
+
+    populateUserHeader() {
+        const nameEl = document.querySelector('.officer-name');
+        const roleEl = document.querySelector('.officer-role');
+        const avatarEl = document.querySelector('.officer-avatar img');
+        const notifNameEl = document.querySelector('.notification-user-name');
+        const notifRoleEl = document.querySelector('.notification-user-role');
+
+        if (!this.currentUser) return;
+
+        const name = this.currentUser.name || 'Officer';
+        const role = this.currentUser.role?.name || 'Officer';
+        const department = this.currentUser.department || '';
+        const avatar = this.currentUser.avatar;
+
+        if (nameEl) nameEl.textContent = name;
+        if (roleEl) roleEl.textContent = department ? `${role} • ${department}` : role;
+        if (notifNameEl) notifNameEl.textContent = name;
+        if (notifRoleEl) notifRoleEl.textContent = role;
+        if (avatarEl && avatar) {
+            avatarEl.src = avatar;
+            avatarEl.alt = name;
+        }
     }
 
     animateKPIValues() {
@@ -449,8 +515,10 @@ class DashboardApp {
     // Feedback management functions
     async viewFeedback(feedbackId) {
         try {
-            if (api && api.getToken()) {
-                const response = await api.getFeedback(feedbackId);
+            const apiClient = new ApiClient();
+            
+            if (apiClient.getToken()) {
+                const response = await apiClient.getFeedback(feedbackId);
                 const feedback = response.data || response;
                 
                 // Populate modal with feedback data
@@ -498,8 +566,10 @@ class DashboardApp {
             const assigneeId = prompt('Enter assignee user ID:');
             if (!assigneeId) return;
 
-            if (api && api.getToken()) {
-                const response = await api.assignFeedback(feedbackId, assigneeId);
+            const apiClient = new ApiClient();
+            
+            if (apiClient.getToken()) {
+                const response = await apiClient.assignFeedback(feedbackId, assigneeId);
                 this.showNotification('Feedback assigned successfully!', 'success');
                 // Refresh feedbacks list
                 await this.loadDashboardData();
