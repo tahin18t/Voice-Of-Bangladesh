@@ -29,7 +29,7 @@ The Voice of Bangladesh system successfully delivers a fully functional, AI-assi
 
 1. Citizen Feedback Submission Interface
 
-A responsive and bilingual (Bangla + English) web portal enables citizens to submit complaints, suggestions, and feedback easily. The system captures detailed information including category, location, description, and attachments. The interface is optimized for both mobile and desktop usage.
+A responsive and bilingual (Bangla + English) web portal enables citizens to submit complaints, suggestions, and feedback easily. The system captures detailed information, including category, location, description, and attachments. The interface is optimized for both mobile and desktop usage.
 
 2. AI-Powered Categorization & Routing
 
@@ -63,7 +63,7 @@ These insights help government authorities identify recurring problems, plan pol
 
 7. Fully Responsive Frontend with Modern UI/UX
 
-The portal incorporates Google Fonts, Font Awesome icons, AOS animations, interactive maps using LeafletJS, and a clean modern interface for smooth navigation and optimal user experience.
+The portal incorporates Google Fonts, Font Awesome icons, AOS animations, interactive maps using LeafletJS, and a clean, modern interface for smooth navigation and optimal user experience.
 
 Acknowledgement: 
 
@@ -77,7 +77,7 @@ Finally, we extend our thanks to our peers, friends, and families for their pati
 Team Member & Task:
 Tahin: Officer Dashboard
 Prottoy: Submit Feedback
-Mahtab:tracking system
+Mahtab: tracking system
 Siam: login portal
 Moin: Main Dashboard
 
