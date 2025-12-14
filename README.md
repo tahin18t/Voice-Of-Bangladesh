@@ -185,6 +185,10 @@ Thank you for your patience, understanding, and moral support throughout the dev
 ### Location & Evidence
 ![photo_2025-12-15 04 42 14](https://github.com/user-attachments/assets/3a46c84d-1551-45bf-8226-8f1ff49c69ee)
 
+### Contact information
+![photo_2025-12-15 04 42 19](https://github.com/user-attachments/assets/0114f9d7-3a86-4b0a-8798-98283c57ff63)
+
+
 ### Login Page
 ![Home Page](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
 
