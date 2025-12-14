@@ -176,6 +176,10 @@ Thank you for your patience, understanding, and moral support throughout the dev
 ### All connected gov't sector
 <img width="1363" height="882" alt="Screenshot 2025-12-06 201757" src="https://github.com/user-attachments/assets/026684a5-eda5-47ab-825d-21b69d9f7bc4" />
 
+### Al-Powered Feedback Submission
+<img width="1568" height="873" alt="Screenshot 2025-12-06 203235" src="https://github.com/user-attachments/assets/adc04b1f-3cac-45da-9929-4fb9682deedc" />
+
+
 
 ### Login Page
 ![Home Page](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
