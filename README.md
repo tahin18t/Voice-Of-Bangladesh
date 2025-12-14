@@ -179,6 +179,8 @@ Thank you for your patience, understanding, and moral support throughout the dev
 ### Al-Powered Feedback Submission
 <img width="1568" height="873" alt="Screenshot 2025-12-06 203235" src="https://github.com/user-attachments/assets/adc04b1f-3cac-45da-9929-4fb9682deedc" />
 
+### Category Selection
+<img width="1594" height="869" alt="Screenshot 2025-12-06 203246" src="https://github.com/user-attachments/assets/a14c639a-caaa-408a-9b79-58ee5fd3289e" />
 
 
 ### Login Page
