@@ -67,11 +67,11 @@ The portal incorporates Google Fonts, Font Awesome icons, AOS animations, intera
 
 Acknowledgement: 
 
-We would like to extend our sincere gratitude to all the individuals who supported us throughout the development of the "Voice of Bangladesh" project.
+We want to extend our sincere gratitude to all the individuals who supported us throughout the development of the "Voice of Bangladesh" project.
 
 First and foremost, we are profoundly grateful to our project supervisor, Md Mezbaul Islam Zion, for their invaluable guidance, insightful feedback, and constant encouragement. Their expertise and mentorship were instrumental in shaping the technical and strategic direction of this project.
 We also wish to thank Daffodil International University, particularly the Department of Computer Science and Engineering, for providing us with the necessary resources, academic environment, and platform to undertake this ambitious initiative.
-This project would not have been possible without the dedicated effort and collaborative spirit of every team member. Each member's contribution was crucial to the project's success, and we are proud of the work accomplished together.
+This project would not have been possible without the dedicated effort and collaborative spirit of every team member. Each member's contribution was crucial to the project's success, and we take pride in the work accomplished together.
 Finally, we extend our thanks to our peers, friends, and families for their patience, understanding, and unwavering moral support during the intensive periods of development and documentation.
 
 Team Member & Task:
