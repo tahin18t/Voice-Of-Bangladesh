@@ -182,6 +182,8 @@ Thank you for your patience, understanding, and moral support throughout the dev
 ### Category Selection
 <img width="1594" height="869" alt="Screenshot 2025-12-06 203246" src="https://github.com/user-attachments/assets/a14c639a-caaa-408a-9b79-58ee5fd3289e" />
 
+### Location & Evidence
+![photo_2025-12-15 04 42 14](https://github.com/user-attachments/assets/3a46c84d-1551-45bf-8226-8f1ff49c69ee)
 
 ### Login Page
 ![Home Page](https://github.com/tahin18t/Voice-Of-Bangladesh/blob/2452cefa57e1cb404514b028d3e39f62f6521b78/UI%20(1).png)
