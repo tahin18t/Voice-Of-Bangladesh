@@ -190,6 +190,8 @@ Thank you for your patience, understanding, and moral support throughout the dev
 
 ### Feedback With AI Assistant
 ![photo_2025-12-15 04 40 20](https://github.com/user-attachments/assets/95ea2eb0-4333-411c-bb21-4c204716edcb)
+###track page:
+<img width="1296" height="996" alt="image" src="https://github.com/user-attachments/assets/850da426-966a-45b5-be5d-955d8053f937" />
 
 
 
