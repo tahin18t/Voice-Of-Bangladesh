@@ -3,8 +3,20 @@ let currentLanguage = 'en';
 let currentCarouselIndex = 0;
 let dashboardSidebarOpen = true;
 
+let loginBtn = document.querySelector(".login-btn");
+
+loginBtn.addEventListener('click', () => {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    if(email && password){
+        // Redirect if both fields are filled
+        window.location.href = 'officer-dashboard';
+    }
+});
+
 // DOM Content Loaded Event
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeApp();
 });
 
@@ -14,34 +26,34 @@ function initializeApp() {
     const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
     currentLanguage = savedLanguage;
     updateLanguage();
-    
+
     // Mobile menu toggle
     initializeMobileMenu();
-    
+
     // Language toggle
     initializeLanguageToggle();
-    
+
     // Form validations
     initializeForms();
-    
+
     // Dashboard functionality
     if (document.body.classList.contains('dashboard-body')) {
         initializeDashboard();
     }
-    
+
     // Track page functionality
     if (window.location.pathname.includes('track.html')) {
         initializeTrackPage();
     }
-    
+
     // Login page functionality
     if (document.body.classList.contains('login-body')) {
         initializeLoginPage();
     }
-    
+
     // Carousel functionality
     initializeCarousel();
-    
+
     // Stats animation
     animateStats();
 }
@@ -50,11 +62,11 @@ function initializeApp() {
 function initializeMobileMenu() {
     const mobileMenu = document.getElementById('mobile-toggle');
     const navMenu = document.querySelector('.nav-menu');
-    
+
     if (mobileMenu && navMenu) {
-        mobileMenu.addEventListener('click', function() {
+        mobileMenu.addEventListener('click', function () {
             navMenu.classList.toggle('active');
-            
+
             // Animate hamburger
             const bars = mobileMenu.querySelectorAll('span');
             bars.forEach((bar, index) => {
@@ -75,7 +87,7 @@ function initializeMobileMenu() {
 function initializeLanguageToggle() {
     const langButtons = document.querySelectorAll('.lang-switch, .lang-toggle');
     langButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             e.preventDefault();
             toggleLanguage();
         });
@@ -99,28 +111,28 @@ function updateLanguage() {
             element.textContent = translation;
         }
     });
-    
+
     // Update placeholders
     const placeholderElements = document.querySelectorAll('[data-placeholder-en][data-placeholder-bn]');
     placeholderElements.forEach(element => {
-        const placeholder = currentLanguage === 'en' ? 
-            element.getAttribute('data-placeholder-en') : 
+        const placeholder = currentLanguage === 'en' ?
+            element.getAttribute('data-placeholder-en') :
             element.getAttribute('data-placeholder-bn');
         if (placeholder) {
             element.setAttribute('placeholder', placeholder);
         }
     });
-    
+
     // Update document language (keep LTR direction for Bengali)
     document.documentElement.setAttribute('dir', 'ltr');
     document.documentElement.setAttribute('lang', currentLanguage === 'bn' ? 'bn' : 'en');
-    
+
     // Update language display button specifically
     const langDisplay = document.getElementById('lang-display');
     if (langDisplay) {
         langDisplay.textContent = currentLanguage === 'en' ? 'বাংলা' : 'English';
     }
-    
+
     // Save preference
     localStorage.setItem('preferredLanguage', currentLanguage);
 }
@@ -131,26 +143,26 @@ function initializeForms() {
     const feedbackForm = document.getElementById('feedback-form');
     if (feedbackForm) {
         feedbackForm.addEventListener('submit', handleFeedbackSubmit);
-        
+
         // File upload handling
         const fileInput = document.getElementById('attachment');
         if (fileInput) {
             fileInput.addEventListener('change', handleFileUpload);
         }
-        
+
         // Anonymous checkbox
         const anonymousCheckbox = document.getElementById('anonymous');
         if (anonymousCheckbox) {
             anonymousCheckbox.addEventListener('change', toggleContactFields);
         }
     }
-    
+
     // Track form
     const trackForm = document.getElementById('track-form');
     if (trackForm) {
         trackForm.addEventListener('submit', handleTrackSubmit);
     }
-    
+
     // Login form
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
@@ -161,27 +173,27 @@ function initializeForms() {
 // Feedback Form Submission
 function handleFeedbackSubmit(e) {
     e.preventDefault();
-    
+
     // Validate form
     if (!validateFeedbackForm()) {
         return;
     }
-    
+
     // Simulate form submission
     const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
-    
+
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-    
+
     setTimeout(() => {
         // Generate tracking ID
         const trackingId = generateTrackingId();
         document.getElementById('generated-tracking-id').textContent = trackingId;
-        
+
         // Show success modal
         showModal('success-modal');
-        
+
         // Reset form
         e.target.reset();
         submitBtn.disabled = false;
@@ -193,7 +205,7 @@ function validateFeedbackForm() {
     const form = document.getElementById('feedback-form');
     const requiredFields = form.querySelectorAll('[required]');
     let isValid = true;
-    
+
     requiredFields.forEach(field => {
         if (!field.value.trim()) {
             showFieldError(field, 'This field is required');
@@ -202,30 +214,30 @@ function validateFeedbackForm() {
             clearFieldError(field);
         }
     });
-    
+
     // Email validation
     const email = form.querySelector('#email');
     if (email && email.value && !isValidEmail(email.value)) {
         showFieldError(email, 'Please enter a valid email address');
         isValid = false;
     }
-    
+
     return isValid;
 }
 
 function showFieldError(field, message) {
     // Remove existing error
     clearFieldError(field);
-    
+
     // Add error styling
     field.style.borderColor = '#D93025';
-    
+
     // Add error message
     const errorElement = document.createElement('small');
     errorElement.className = 'field-error';
     errorElement.style.color = '#D93025';
     errorElement.textContent = message;
-    
+
     field.parentNode.appendChild(errorElement);
 }
 
@@ -246,17 +258,17 @@ function isValidEmail(email) {
 function handleFileUpload(e) {
     const files = e.target.files;
     const previewContainer = document.getElementById('file-preview');
-    
+
     if (!previewContainer) return;
-    
+
     previewContainer.innerHTML = '';
-    
+
     Array.from(files).forEach((file, index) => {
         if (file.size > 10 * 1024 * 1024) { // 10MB limit
             alert(`File "${file.name}" is too large. Maximum size is 10MB.`);
             return;
         }
-        
+
         const filePreview = document.createElement('div');
         filePreview.className = 'file-preview-item';
         filePreview.innerHTML = `
@@ -290,7 +302,7 @@ function removeFile(index) {
 function toggleContactFields() {
     const anonymous = document.getElementById('anonymous');
     const contactFields = document.querySelectorAll('#name, #phone, #email');
-    
+
     contactFields.forEach(field => {
         if (anonymous.checked) {
             field.disabled = true;
@@ -317,9 +329,9 @@ function showModal(modalId) {
         modal.style.display = 'flex';
         modal.classList.add('show');
         document.body.style.overflow = 'hidden';
-        
+
         // Add backdrop click to close
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 hideModal(modalId);
             }
@@ -354,7 +366,7 @@ function copyTrackingId() {
         const originalIcon = copyBtn.innerHTML;
         copyBtn.innerHTML = '<i class="fas fa-check"></i>';
         copyBtn.style.color = '#0F9D58';
-        
+
         setTimeout(() => {
             copyBtn.innerHTML = originalIcon;
             copyBtn.style.color = '';
@@ -419,55 +431,57 @@ function initializeTrackPage() {
             }
         }
     };
-    
+
     window.sampleTrackingData = sampleData;
 }
 
 // Track Form Submission
 function handleTrackSubmit(e) {
     e.preventDefault();
-    
+
     const trackingId = document.getElementById('tracking-id').value.trim();
-    
+
     if (!trackingId) {
         showError('Please enter a tracking ID');
         return;
     }
-    
+
     // Validate format
     const trackingIdPattern = /^CFP-\d{4}-\d{5}$/;
     if (!trackingIdPattern.test(trackingId)) {
         showError('Please enter a valid tracking ID format (CFP-YYYY-XXXXX)');
         return;
     }
-    
+
     searchFeedback(trackingId);
 }
 
 function searchFeedback(trackingId) {
     const resultsContainer = document.getElementById('track-results');
     const errorContainer = document.getElementById('error-message');
-    
+
     // Hide previous results
     resultsContainer.style.display = 'none';
     errorContainer.style.display = 'none';
-    
+
     // Show loading
     const searchBtn = document.querySelector('.search-btn');
     const originalText = searchBtn.innerHTML;
     searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
     searchBtn.disabled = true;
-    
+
     setTimeout(() => {
         const data = window.sampleTrackingData && window.sampleTrackingData[trackingId];
-        
+
         if (data) {
             displayTrackingResults(data);
-            resultsContainer.style.display = 'flex';
+            // Use CSS-defined grid layout for proper responsive design
+            resultsContainer.style.display = 'grid';
         } else {
-            errorContainer.style.display = 'block';
+            // errorContainer.style.display = 'block';
+            resultsContainer.style.display = 'grid';
         }
-        
+
         searchBtn.innerHTML = originalText;
         searchBtn.disabled = false;
     }, 1500);
@@ -475,22 +489,22 @@ function searchFeedback(trackingId) {
 
 function displayTrackingResults(data) {
     // Update feedback details
-    document.getElementById('feedback-id').textContent = data.id;
+    document.getElementById('feedback-id').textContent = data;
     document.getElementById('feedback-category').textContent = data.category;
     document.getElementById('feedback-date').textContent = data.date;
     document.getElementById('feedback-location').textContent = data.location;
     document.getElementById('feedback-department').textContent = data.department;
     document.getElementById('feedback-desc').textContent = data.description;
     document.getElementById('current-status').textContent = getStatusText(data.status);
-    
+
     // Update timeline
     updateTimeline(data.timeline);
-    
+
     // Show response if resolved
     if (data.response) {
         displayResponse(data.response);
     }
-    
+
     // Show rating if resolved
     if (data.status === 'resolved') {
         document.getElementById('rating-card').style.display = 'block';
@@ -499,15 +513,15 @@ function displayTrackingResults(data) {
 
 function updateTimeline(timeline) {
     const steps = ['received', 'review', 'action', 'resolved'];
-    
+
     steps.forEach(step => {
         const stepElement = document.getElementById(`step-${step}`);
         const stepData = timeline[step];
-        
+
         if (!stepElement) return;
-        
+
         stepElement.className = 'timeline-item';
-        
+
         if (stepData.completed) {
             stepElement.classList.add('completed');
         } else if (stepData.active) {
@@ -515,7 +529,7 @@ function updateTimeline(timeline) {
         } else {
             stepElement.classList.add('pending');
         }
-        
+
         const dateElement = stepElement.querySelector('.timeline-date');
         if (dateElement) {
             dateElement.textContent = stepData.date;
@@ -537,7 +551,7 @@ function displayResponse(response) {
     const responseCard = document.getElementById('response-card');
     const responseDate = document.getElementById('response-date');
     const responseContent = document.getElementById('response-content');
-    
+
     responseDate.textContent = response.date;
     responseContent.innerHTML = response.content.replace(/\n/g, '<br>');
     responseCard.style.display = 'block';
@@ -555,7 +569,7 @@ let currentRating = 0;
 function rate(rating) {
     currentRating = rating;
     const stars = document.querySelectorAll('.star');
-    
+
     stars.forEach((star, index) => {
         if (index < rating) {
             star.classList.add('active');
@@ -574,10 +588,10 @@ function printDetails() {
 function initializeDashboard() {
     // Initialize section switching
     initializeSectionSwitching();
-    
+
     // Initialize charts
     initializeCharts();
-    
+
     // Update dashboard stats periodically
     setInterval(updateDashboardStats, 30000); // Update every 30 seconds
 }
@@ -589,7 +603,7 @@ function initializeSectionSwitching() {
             e.preventDefault();
             const sectionId = link.getAttribute('href').replace('#', '') + '-section';
             showSection(sectionId.replace('-section-section', '-section'));
-            
+
             // Update active menu item
             document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
             link.parentElement.classList.add('active');
@@ -602,13 +616,13 @@ function showSection(sectionName) {
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
     });
-    
+
     // Show target section
     const targetSection = document.getElementById(sectionName + '-section');
     if (targetSection) {
         targetSection.classList.add('active');
     }
-    
+
     // Update menu active state
     document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
     const menuItem = document.querySelector(`[onclick="showSection('${sectionName}')"]`);
@@ -620,7 +634,7 @@ function showSection(sectionName) {
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     dashboardSidebarOpen = !dashboardSidebarOpen;
-    
+
     if (dashboardSidebarOpen) {
         sidebar.style.marginLeft = '0';
     } else {
@@ -635,7 +649,7 @@ function initializeCharts() {
     if (trendCanvas) {
         drawTrendChart(trendCanvas);
     }
-    
+
     // Category Chart
     const categoryCanvas = document.getElementById('categoryCanvas');
     if (categoryCanvas) {
@@ -647,15 +661,15 @@ function drawTrendChart(canvas) {
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
-    
+
     // Clear canvas
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, width, height);
-    
+
     // Sample data
     const data = [12, 18, 25, 15, 32, 28, 35, 42, 38, 45];
     const maxValue = Math.max(...data);
-    
+
     // Draw axes
     ctx.strokeStyle = '#DADCE0';
     ctx.lineWidth = 2;
@@ -665,29 +679,29 @@ function drawTrendChart(canvas) {
     ctx.moveTo(40, height - 40);
     ctx.lineTo(40, 20);
     ctx.stroke();
-    
+
     // Draw data line
     ctx.strokeStyle = '#006747';
     ctx.lineWidth = 3;
     ctx.beginPath();
-    
+
     data.forEach((value, index) => {
         const x = 50 + (index * (width - 70) / (data.length - 1));
         const y = height - 50 - ((value / maxValue) * (height - 70));
-        
+
         if (index === 0) {
             ctx.moveTo(x, y);
         } else {
             ctx.lineTo(x, y);
         }
-        
+
         // Draw points
         ctx.fillStyle = '#006747';
         ctx.beginPath();
         ctx.arc(x, y, 4, 0, 2 * Math.PI);
         ctx.fill();
     });
-    
+
     ctx.stroke();
 }
 
@@ -696,11 +710,11 @@ function drawCategoryChart(canvas) {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = 100;
-    
+
     // Clear canvas
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Sample data
     const categories = [
         { name: 'Roads', value: 35, color: '#1976D2' },
@@ -709,12 +723,12 @@ function drawCategoryChart(canvas) {
         { name: 'Environment', value: 15, color: '#388E3C' },
         { name: 'Other', value: 5, color: '#7B1FA2' }
     ];
-    
+
     let currentAngle = -Math.PI / 2;
-    
+
     categories.forEach(category => {
         const sliceAngle = (category.value / 100) * 2 * Math.PI;
-        
+
         // Draw slice
         ctx.fillStyle = category.color;
         ctx.beginPath();
@@ -722,18 +736,18 @@ function drawCategoryChart(canvas) {
         ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
         ctx.closePath();
         ctx.fill();
-        
+
         // Add labels
         const labelAngle = currentAngle + sliceAngle / 2;
         const labelX = centerX + Math.cos(labelAngle) * (radius + 20);
         const labelY = centerY + Math.sin(labelAngle) * (radius + 20);
-        
+
         ctx.fillStyle = '#202124';
         ctx.font = '12px Poppins';
         ctx.textAlign = 'center';
         ctx.fillText(`${category.name}`, labelX, labelY);
         ctx.fillText(`${category.value}%`, labelX, labelY + 15);
-        
+
         currentAngle += sliceAngle;
     });
 }
@@ -742,15 +756,15 @@ function drawCategoryChart(canvas) {
 function refreshDashboard() {
     const refreshBtn = document.querySelector('.refresh-btn');
     const originalIcon = refreshBtn.innerHTML;
-    
+
     refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
     refreshBtn.disabled = true;
-    
+
     setTimeout(() => {
         updateDashboardStats();
         refreshBtn.innerHTML = originalIcon;
         refreshBtn.disabled = false;
-        
+
         // Show success message
         showToast('Dashboard refreshed successfully!');
     }, 2000);
@@ -764,7 +778,7 @@ function updateDashboardStats() {
         { element: 'active-depts', target: 24 },
         { element: 'satisfaction', target: Math.floor(Math.random() * 10) + 85 }
     ];
-    
+
     stats.forEach(stat => {
         const element = document.getElementById(stat.element);
         if (element) {
@@ -778,7 +792,7 @@ function animateNumber(element, target, suffix = '') {
     const current = parseInt(element.textContent.replace(/[^0-9]/g, '')) || 0;
     const increment = (target - current) / 20;
     let currentValue = current;
-    
+
     const timer = setInterval(() => {
         currentValue += increment;
         if ((increment > 0 && currentValue >= target) || (increment < 0 && currentValue <= target)) {
@@ -793,7 +807,7 @@ function animateNumber(element, target, suffix = '') {
 function viewFeedbackDetails(feedbackId) {
     // Populate modal with feedback data
     document.getElementById('detail-id').textContent = feedbackId;
-    
+
     // Show modal
     showModal('feedback-detail-modal');
 }
@@ -810,7 +824,7 @@ function updateStatus(feedbackId) {
 function selectAll() {
     const checkboxes = document.querySelectorAll('.feedback-table tbody input[type="checkbox"]');
     const selectAllCheckbox = document.querySelector('.feedback-table thead input[type="checkbox"]');
-    
+
     checkboxes.forEach(checkbox => {
         checkbox.checked = selectAllCheckbox.checked;
     });
@@ -818,7 +832,7 @@ function selectAll() {
 
 function generateReport() {
     showToast('Generating report...');
-    
+
     setTimeout(() => {
         showToast('Report generated successfully!');
         // In a real app, this would download a file
@@ -827,12 +841,12 @@ function generateReport() {
 
 function bulkUpdate() {
     const selectedCheckboxes = document.querySelectorAll('.feedback-table tbody input[type="checkbox"]:checked');
-    
+
     if (selectedCheckboxes.length === 0) {
         showToast('Please select at least one feedback item.');
         return;
     }
-    
+
     showToast(`Bulk update applied to ${selectedCheckboxes.length} items.`);
 }
 
@@ -845,12 +859,12 @@ function useAISuggestion() {
 
 function sendResponse() {
     const responseText = document.getElementById('officer-response').value;
-    
+
     if (!responseText.trim()) {
         showToast('Please enter a response before sending.');
         return;
     }
-    
+
     showToast('Response sent successfully!');
     closeFeedbackModal();
 }
@@ -867,7 +881,7 @@ function initializeLoginPage() {
     if (passwordToggle) {
         passwordToggle.addEventListener('click', togglePasswordVisibility);
     }
-    
+
     // Remember credentials
     loadRememberedCredentials();
 }
@@ -875,7 +889,7 @@ function initializeLoginPage() {
 function togglePassword() {
     const passwordInput = document.getElementById('password');
     const eyeIcon = document.getElementById('password-eye');
-    
+
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
         eyeIcon.classList.replace('fa-eye', 'fa-eye-slash');
@@ -892,7 +906,12 @@ function togglePasswordVisibility() {
 function fillDemoCredentials(type) {
     const emailField = document.getElementById('email');
     const passwordField = document.getElementById('password');
-    
+
+    if (!emailField || !passwordField) {
+        console.error('Email or password field not found');
+        return;
+    }
+
     if (type === 'officer') {
         emailField.value = 'officer@cfpip.gov.bd';
         passwordField.value = 'password123';
@@ -904,87 +923,157 @@ function fillDemoCredentials(type) {
 
 function handleLogin(e) {
     e.preventDefault();
-    
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const remember = document.getElementById('remember').checked;
-    
+
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const rememberInput = document.getElementById('remember');
+
+    if (!emailInput || !passwordInput) {
+        console.error('❌ Login form elements not found');
+        showError('Login form not properly loaded. Please refresh the page.');
+        return;
+    }
+
+    const email = emailInput.value;
+    const password = passwordInput.value;
+    const remember = rememberInput?.checked || false;
+
     if (!email || !password) {
         showError('Please enter both email and password.');
         return;
     }
-    
+
     // Show loading
     const loginBtn = document.querySelector('.login-btn');
     const loader = document.getElementById('login-loader');
-    const btnText = loginBtn.querySelector('span');
-    
-    loginBtn.disabled = true;
-    loader.style.display = 'block';
-    btnText.style.opacity = '0';
-    
-    // Simulate login
-    setTimeout(() => {
-        // Check credentials (demo)
-        const validCredentials = [
-            { email: 'officer@cfpip.gov.bd', password: 'password123' },
-            { email: 'admin@cfpip.gov.bd', password: 'admin456' }
-        ];
-        
-        const isValid = validCredentials.some(cred => 
-            cred.email === email && cred.password === password
-        );
-        
-        if (isValid) {
+    const btnText = loginBtn?.querySelector('span');
+
+    if (loginBtn) {
+        loginBtn.disabled = true;
+    }
+
+    if (loader) {
+        loader.style.display = 'block';
+    }
+
+    if (btnText) {
+        btnText.style.opacity = '0';
+    }
+
+    // Get CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    // Use web login endpoint for session-based auth
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': csrfToken || ''
+        },
+        body: JSON.stringify({ email, password, remember })
+    })
+        .then(res => res.json())
+        .then(response => {
+            if (!response.success) {
+                throw new Error(response.message || 'Login failed');
+            }
+
+            console.log('✅ Login successful! Response:', response);
+
+            // Save user info
+            localStorage.setItem('user', JSON.stringify(response.user));
+            localStorage.setItem('userRole', response.role);
+            localStorage.setItem('isAuthenticated', 'true');
+
             // Save credentials if remember is checked
             if (remember) {
                 localStorage.setItem('rememberedEmail', email);
             } else {
                 localStorage.removeItem('rememberedEmail');
             }
-            
+
             // Show success modal
             showModal('success-modal');
-            
-            // Redirect after animation
+
+            // Redirect to server-provided URL after animation
             setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 3000);
-        } else {
+                const redirectUrl = response.redirect || '/officer-dashboard';
+                console.log('🔄 Redirecting to:', redirectUrl);
+                window.location.href = redirectUrl;
+            }, 1500);
+        })
+        .catch(error => {
+            console.error('❌ Login error:', error);
             // Show error modal
             showModal('error-modal');
-            
-            loginBtn.disabled = false;
-            loader.style.display = 'none';
-            btnText.style.opacity = '';
-        }
-    }, 2000);
+
+            if (loginBtn) {
+                loginBtn.disabled = false;
+            }
+
+            if (loader) {
+                loader.style.display = 'none';
+            }
+
+            if (btnText) {
+                btnText.style.opacity = '';
+            }
+        });
 }
 
 function loadRememberedCredentials() {
     const rememberedEmail = localStorage.getItem('rememberedEmail');
     if (rememberedEmail) {
-        document.getElementById('email').value = rememberedEmail;
-        document.getElementById('remember').checked = true;
+        const emailInput = document.getElementById('email');
+        const rememberCheckbox = document.getElementById('remember');
+
+        if (emailInput) {
+            emailInput.value = rememberedEmail;
+        }
+
+        if (rememberCheckbox) {
+            rememberCheckbox.checked = true;
+        }
     }
 }
 
 // Dashboard Logout Function
 function logout() {
-    // Show confirmation
-    if (confirm('Are you sure you want to logout?')) {
-        // Show loading toast
-        showToast('Logging out...');
-        
-        // Clear any stored data
-        localStorage.removeItem('currentUser');
-        sessionStorage.clear();
-        
-        // Redirect after a short delay
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
+    if (!confirm('Are you sure you want to logout?')) {
+        return;
     }
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    fetch('/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': csrfToken || ''
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
+        // Clear local storage
+        localStorage.removeItem('user');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('auth_token');
+
+        console.log('✅ Logged out successfully');
+        window.location.href = '/login';
+    })
+    .catch(error => {
+        console.error('❌ Logout error:', error);
+        // Clear local storage anyway
+        localStorage.removeItem('user');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('auth_token');
+        window.location.href = '/login';
+    });
 }
 
 // Toast Notification System
@@ -992,7 +1081,7 @@ function showToast(message, type = 'info') {
     // Remove existing toasts
     const existingToasts = document.querySelectorAll('.toast');
     existingToasts.forEach(toast => toast.remove());
-    
+
     // Create toast element
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
@@ -1005,7 +1094,7 @@ function showToast(message, type = 'info') {
             <i class="fas fa-times"></i>
         </button>
     `;
-    
+
     // Add styles
     toast.style.cssText = `
         position: fixed;
@@ -1026,10 +1115,10 @@ function showToast(message, type = 'info') {
         animation: slideIn 0.3s ease-out;
         font-family: 'Inter', sans-serif;
     `;
-    
+
     // Add to document
     document.body.appendChild(toast);
-    
+
     // Auto remove after 3 seconds
     setTimeout(() => {
         toast.style.animation = 'slideOut 0.3s ease-in';
@@ -1042,7 +1131,7 @@ function showToast(message, type = 'info') {
 }
 
 function getToastIcon(type) {
-    switch(type) {
+    switch (type) {
         case 'success': return 'fa-check-circle';
         case 'error': return 'fa-exclamation-circle';
         case 'warning': return 'fa-exclamation-triangle';
@@ -1051,7 +1140,7 @@ function getToastIcon(type) {
 }
 
 function getToastColor(type) {
-    switch(type) {
+    switch (type) {
         case 'success': return '#16a34a';
         case 'error': return '#dc2626';
         case 'warning': return '#d97706';
@@ -1074,7 +1163,7 @@ if (!document.querySelector('#toast-animations')) {
                 opacity: 1;
             }
         }
-        
+
         @keyframes slideOut {
             from {
                 transform: translateX(0);
@@ -1085,7 +1174,7 @@ if (!document.querySelector('#toast-animations')) {
                 opacity: 0;
             }
         }
-        
+
         .toast-content {
             display: flex;
             align-items: center;
@@ -1093,7 +1182,7 @@ if (!document.querySelector('#toast-animations')) {
             color: #374151;
             font-weight: 500;
         }
-        
+
         .toast-close {
             background: none;
             border: none;
@@ -1103,7 +1192,7 @@ if (!document.querySelector('#toast-animations')) {
             border-radius: 4px;
             transition: all 0.2s ease;
         }
-        
+
         .toast-close:hover {
             background: #f3f4f6;
             color: #6b7280;
@@ -1124,10 +1213,22 @@ function showError(message) {
     showModal('error-modal');
 }
 
-function logout() {
+function logoutAlt() {
     if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('userSession');
-        window.location.href = 'index.html';
+        // Call API logout if api client is available
+        if (typeof api !== 'undefined') {
+            api.logout().then(() => {
+                window.location.href = '/login';
+            }).catch(error => {
+                console.error('Logout error:', error);
+                api.clearToken();
+                window.location.href = '/login';
+            });
+        } else {
+            localStorage.removeItem('userSession');
+            localStorage.removeItem('auth_token');
+            window.location.href = '/login';
+        }
     }
 }
 
@@ -1135,10 +1236,10 @@ function logout() {
 function initializeCarousel() {
     const carousel = document.querySelector('.insights-carousel');
     if (!carousel) return;
-    
+
     const cards = carousel.children;
     const totalCards = cards.length;
-    
+
     // Auto-advance carousel
     setInterval(() => {
         moveCarousel(1);
@@ -1148,18 +1249,18 @@ function initializeCarousel() {
 function moveCarousel(direction) {
     const carousel = document.querySelector('.insights-carousel');
     if (!carousel) return;
-    
+
     const cards = carousel.children;
     const totalCards = cards.length;
-    
+
     currentCarouselIndex += direction;
-    
+
     if (currentCarouselIndex >= totalCards) {
         currentCarouselIndex = 0;
     } else if (currentCarouselIndex < 0) {
         currentCarouselIndex = totalCards - 1;
     }
-    
+
     // Apply transform
     const cardWidth = cards[0].offsetWidth + 32; // Including gap
     carousel.style.transform = `translateX(-${currentCarouselIndex * cardWidth}px)`;
@@ -1168,7 +1269,7 @@ function moveCarousel(direction) {
 // Stats Animation on Scroll
 function animateStats() {
     const stats = document.querySelectorAll('.stat-number');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -1179,7 +1280,7 @@ function animateStats() {
             }
         });
     });
-    
+
     stats.forEach(stat => observer.observe(stat));
 }
 
@@ -1188,7 +1289,7 @@ function showToast(message, type = 'info') {
     // Remove existing toasts
     const existingToasts = document.querySelectorAll('.toast');
     existingToasts.forEach(toast => toast.remove());
-    
+
     // Create toast
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
@@ -1199,7 +1300,7 @@ function showToast(message, type = 'info') {
             <i class="fas fa-times"></i>
         </button>
     `;
-    
+
     // Style toast
     Object.assign(toast.style, {
         position: 'fixed',
@@ -1217,9 +1318,9 @@ function showToast(message, type = 'info') {
         maxWidth: '400px',
         animation: 'slideInRight 0.3s ease'
     });
-    
+
     document.body.appendChild(toast);
-    
+
     // Auto-remove after 5 seconds
     setTimeout(() => {
         if (toast.parentElement) {
@@ -1242,7 +1343,7 @@ style.textContent = `
             opacity: 1;
         }
     }
-    
+
     @keyframes slideOutRight {
         from {
             transform: translateX(0);
@@ -1271,7 +1372,7 @@ function debounce(func, wait) {
 
 function throttle(func, limit) {
     let inThrottle;
-    return function() {
+    return function () {
         const args = arguments;
         const context = this;
         if (!inThrottle) {
@@ -1283,18 +1384,18 @@ function throttle(func, limit) {
 }
 
 // Error Handling
-window.addEventListener('error', function(e) {
+window.addEventListener('error', function (e) {
     console.error('JavaScript Error:', e.error);
-    showToast('An unexpected error occurred. Please refresh the page.', 'error');
+    // showToast('An unexpected error occurred. Please refresh the page.', 'error');
 });
 
 // Accessibility Enhancements
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     // ESC key to close modals
     if (e.key === 'Escape') {
         closeModal();
     }
-    
+
     // Tab key navigation for modals
     if (e.key === 'Tab') {
         const openModal = document.querySelector('.modal[style*="flex"]');
@@ -1302,10 +1403,10 @@ document.addEventListener('keydown', function(e) {
             const focusableElements = openModal.querySelectorAll(
                 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             );
-            
+
             const firstElement = focusableElements[0];
             const lastElement = focusableElements[focusableElements.length - 1];
-            
+
             if (e.shiftKey) {
                 if (document.activeElement === firstElement) {
                     e.preventDefault();
@@ -1332,42 +1433,42 @@ const performanceObserver = new PerformanceObserver((list) => {
 
 performanceObserver.observe({ entryTypes: ['navigation'] });
 
-// Service Worker Registration (for future PWA features)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then((registration) => {
-                console.log('SW registered: ', registration);
-            })
-            .catch((registrationError) => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
+// Service Worker Registration (disabled - sw.js not implemented yet)
+// if ('serviceWorker' in navigator) {
+//     window.addEventListener('load', () => {
+//         navigator.serviceWorker.register('/sw.js')
+//             .then((registration) => {
+//                 console.log('SW registered: ', registration);
+//             })
+//             .catch((registrationError) => {
+//                 console.log('SW registration failed: ', registrationError);
+//             });
+//     });
+// }
 
 // AMAZING BUTTON RIPPLE EFFECTS
 function addRippleEffect() {
     document.querySelectorAll('.btn-3d').forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             const ripple = this.querySelector('.btn-ripple');
             if (ripple) {
                 const rect = this.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
                 const x = e.clientX - rect.left - size / 2;
                 const y = e.clientY - rect.top - size / 2;
-                
+
                 // Reset ripple
                 ripple.style.width = '0';
                 ripple.style.height = '0';
                 ripple.style.left = x + 'px';
                 ripple.style.top = y + 'px';
-                
+
                 // Animate ripple
                 requestAnimationFrame(() => {
                     ripple.style.width = size * 2 + 'px';
                     ripple.style.height = size * 2 + 'px';
                 });
-                
+
                 // Remove ripple after animation
                 setTimeout(() => {
                     ripple.style.width = '0';
@@ -1391,37 +1492,37 @@ function initAnimatedTitle() {
 // COUNTER ANIMATION
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const counter = entry.target;
                 const target = parseInt(counter.dataset.target) || 0;
                 const isPercentage = counter.textContent.includes('%');
-                
+
                 let current = 0;
                 const increment = target / 50;
                 const duration = 2000;
                 const step = duration / 50;
-                
+
                 const timer = setInterval(() => {
                     current += increment;
                     if (current >= target) {
                         current = target;
                         clearInterval(timer);
                     }
-                    
+
                     const displayValue = Math.round(current);
-                    counter.textContent = isPercentage ? 
-                        displayValue + '%' : 
+                    counter.textContent = isPercentage ?
+                        displayValue + '%' :
                         displayValue.toLocaleString();
                 }, step);
-                
+
                 observer.unobserve(counter);
             }
         });
     }, { threshold: 0.5 });
-    
+
     counters.forEach(counter => observer.observe(counter));
 }
 
@@ -1436,7 +1537,7 @@ function initFloatingAnimations() {
 // PARTICLE SPARKLES
 function createSparkles() {
     const sparkleContainers = document.querySelectorAll('.stat-card');
-    
+
     sparkleContainers.forEach(container => {
         if (!container.querySelector('.sparkle-container')) {
             const sparkleContainer = document.createElement('div');
@@ -1450,7 +1551,7 @@ function createSparkles() {
                 pointer-events: none;
                 overflow: hidden;
             `;
-            
+
             for (let i = 0; i < 5; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.className = 'dynamic-sparkle';
@@ -1468,7 +1569,7 @@ function createSparkles() {
                 `;
                 sparkleContainer.appendChild(sparkle);
             }
-            
+
             container.appendChild(sparkleContainer);
         }
     });
@@ -1499,7 +1600,7 @@ function initScrollEffects() {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     });
-    
+
     // Observe all major sections
     document.querySelectorAll('.hero, .stats, .insights, .about, .footer').forEach(section => {
         observer.observe(section);
@@ -1523,25 +1624,25 @@ function initDynamicBackgrounds() {
 document.addEventListener('DOMContentLoaded', () => {
     // Add ripple effects to buttons
     addRippleEffect();
-    
+
     // Initialize animated titles
     initAnimatedTitle();
-    
+
     // Initialize counters
     animateCounters();
-    
+
     // Initialize floating animations
     initFloatingAnimations();
-    
+
     // Create sparkles
     createSparkles();
-    
+
     // Initialize scroll effects
     initScrollEffects();
-    
+
     // Initialize dynamic backgrounds
     initDynamicBackgrounds();
-    
+
     console.log('🎉 Amazing effects initialized!');
 });
 

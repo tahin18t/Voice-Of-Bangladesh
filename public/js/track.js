@@ -3,9 +3,11 @@
  * World-class functionality for Bangladesh Government Portal
  */
 
+localStorage.setItem('cfpip-language', 'bn');
+
 class ModernGovernmentPortal {
     constructor() {
-        this.currentLanguage = 'en';
+        this.currentLanguage = 'bn';
         this.isLoaded = false;
         this.chartInstance = null;
         this.statsAnimated = false;

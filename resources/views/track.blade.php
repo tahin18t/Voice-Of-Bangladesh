@@ -28,15 +28,15 @@
 
             <!-- Navigation Menu -->
             <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">
+                <a href="{{ url('/index') }}" class="nav-link">
                     <i class="fas fa-home"></i>
                     <span data-en="Home" data-bn="হোম">Home</span>
                 </a>
-                <a href="submit-feedback.html" class="nav-link">
+                <a href="{{ url('/submit-feedback') }}" class="nav-link">
                     <i class="fas fa-comment-dots"></i>
                     <span data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</span>
                 </a>
-                <a href="track.html" class="nav-link active">
+                <a href="{{ url('/track') }}" class="nav-link active">
                     <i class="fas fa-search-location"></i>
                     <span data-en="Track Progress" data-bn="অগ্রগতি দেখুন">Track Progress</span>
                 </a>
@@ -48,7 +48,7 @@
                     <span class="flag-icon">🇧🇩</span>
                     <span class="lang-text" id="lang-display">বাংলা</span>
                 </button>
-                <a href="login.html" class="officer-login">
+                <a href="{{ url('/login') }}" class="officer-login">
                     <i class="fas fa-shield-alt"></i>
                     <span data-en="Officer Portal" data-bn="কর্মকর্তা পোর্টাল">Officer Portal</span>
                 </a>
@@ -83,15 +83,14 @@
             <div class="search-container">
                 <form id="track-form" class="track-form">
                     <div class="search-input-group">
-                        <input 
-                            type="text" 
-                            id="tracking-id" 
-                            name="tracking-id" 
-                            class="search-input" 
-                            placeholder="Enter Tracking ID (e.g., CFP-2025-00123)"
-                            data-placeholder-en="Enter Tracking ID (e.g., CFP-2025-00123)"
-                            data-placeholder-bn="ট্র্যাকিং ID লিখুন (যেমন, CFP-2025-00123)"
-                            pattern="CFP-\d{4}-\d{5}"
+                        <input
+                            type="text"
+                            id="tracking-id"
+                            name="tracking-id"
+                            class="search-input"
+                            placeholder="Enter Tracking ID (e.g., FB-1734098555)"
+                            data-placeholder-en="Enter Tracking ID (e.g., FB-1734098555)"
+                            data-placeholder-bn="ট্র্যাকিং ID লিখুন (যেমন, FB-1734098555)"
                             required
                         >
                         <button type="submit" class="search-btn" data-en="Track" data-bn="ট্র্যাক করুন">
@@ -99,8 +98,8 @@
                             Track
                         </button>
                     </div>
-                    <small class="search-help" data-en="Tracking ID format: CFP-YYYY-XXXXX" data-bn="ট্র্যাকিং ID ফরম্যাট: CFP-YYYY-XXXXX">
-                        Tracking ID format: CFP-YYYY-XXXXX
+                    <small class="search-help" data-en="Tracking ID format: FB-XXXXXXXXXX" data-bn="ট্র্যাকিং ID ফরম্যাট: FB-XXXXXXXXXX">
+                        Tracking ID format: FB-XXXXXXXXXX
                     </small>
                 </form>
             </div>
@@ -233,8 +232,8 @@
                             <button class="star" onclick="rate(5)"><i class="fas fa-star"></i></button>
                         </div>
                         <div class="rating-comment">
-                            <textarea 
-                                placeholder="Additional comments (optional)" 
+                            <textarea
+                                placeholder="Additional comments (optional)"
                                 data-placeholder-en="Additional comments (optional)"
                                 data-placeholder-bn="অতিরিক্ত মন্তব্য (ঐচ্ছিক)"
                                 class="comment-textarea"
@@ -252,7 +251,7 @@
                         <i class="fas fa-print"></i>
                         Print Details
                     </button>
-                    <a href="feedback.html" class="btn btn-primary" data-en="Submit New Feedback" data-bn="নতুন মতামত দিন">
+                    <a href="{{ url('/submit-feedback') }}" class="btn btn-primary" data-en="Submit New Feedback" data-bn="নতুন মতামত দিন">
                         <i class="fas fa-plus"></i>
                         Submit New Feedback
                     </a>
@@ -308,7 +307,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="https://via.placeholder.com/40x40/FFFFFF/006747?text=BD" alt="Ministry Logo" class="footer-logo-img">
+                        <div class="footer-logo-img" style="width: 40px; height: 40px; background: #006747; color: #FFFFFF; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-weight: bold; font-size: 14px;">BD</div>
                         <span class="footer-logo-text">Ministry of Bangladesh</span>
                     </div>
                     <p class="footer-description" data-en="Building a better Bangladesh through citizen engagement and transparent governance." data-bn="নাগরিক অংশগ্রহণ ও স্বচ্ছ শাসনের মাধ্যমে একটি উন্নত বাংলাদেশ গড়া।">
@@ -318,10 +317,10 @@
                 <div class="footer-section">
                     <h4 class="footer-title" data-en="Quick Links" data-bn="দ্রুত লিংক">Quick Links</h4>
                     <ul class="footer-links">
-                        <li><a href="index.html" data-en="Home" data-bn="হোম">Home</a></li>
-                        <li><a href="feedback.html" data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</a></li>
-                        <li><a href="track.html" data-en="Track Status" data-bn="স্ট্যাটাস দেখুন">Track Status</a></li>
-                        <li><a href="index.html#about" data-en="About" data-bn="সম্পর্কে">About</a></li>
+                        <li><a href="{{ url('/index') }}" data-en="Home" data-bn="হোম">Home</a></li>
+                        <li><a href="{{ url('/submit-feedback') }}" data-en="Submit Feedback" data-bn="মতামত দিন">Submit Feedback</a></li>
+                        <li><a href="{{ url('/track') }}" data-en="Track Status" data-bn="স্ট্যাটাস দেখুন">Track Status</a></li>
+                        <li><a href="{{ url('/index') }}" data-en="About" data-bn="সম্পর্কে">About</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -348,11 +347,8 @@
         </div>
     </footer>
 
-     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
-    <script src="{{ asset('js/track.js') }}"></script>
-    <script src="{{ asset('js/tracking-app.js') }}"></script>
+    <script src="{{ asset('js/api.js') }}"></script>
+    <script src="{{ asset('js/track-feedback.js') }}"></script>
 
 </body>
 </html>
